@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Huile de Nigelle Habashia d'Éthiopie, première pression à froid. 100% pure, non raffinée. Flacon en verre ambré 100ml — 9,99€">
+  <title>Huile de Nigelle Habashia — Éthiopie | Pression à Froid</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── VARIABLES ──────────────────────────────────────── */
+    :root {
+      --black:        #0a0a0a;
+      --black-soft:   #111111;
+      --gold:         #c9a84c;
+      --gold-light:   #e2c06a;
+      --gold-dark:    #9e7e32;
+      --cream:        #f5f0e8;
+      --moss:         #4a5e3a;
+      --moss-light:   #5c7249;
+      --amber:        #8b4513;
+      --border:       rgba(201,168,76,.2);
+      --f-title:      'Cormorant Garamond', Georgia, serif;
+      --f-body:       'Jost', system-ui, sans-serif;
+      --ease:         0.35s cubic-bezier(.25,.46,.45,.94);
+    }
+
+    /* ── BASE ───────────────────────────────────────────── */
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--f-body);
+      background: var(--black);
+      color: var(--cream);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4 { font-family: var(--f-title); font-weight: 500; line-height: 1.15; }
+    h1 { font-size: clamp(2.4rem, 6vw, 4.8rem); }
+    h2 { font-size: clamp(1.9rem, 4vw, 3.4rem); }
+    h3 { font-size: clamp(1.2rem, 2.5vw, 1.7rem); }
+    p  { font-size: .95rem; font-weight: 300; line-height: 1.8; color: rgba(245,240,232,.72); }
+    a  { color: inherit; text-decoration: none; }
+    button { font-family: var(--f-body); }
+
+    /* ── UTILS ──────────────────────────────────────────── */
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0;
+      margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+      white-space: nowrap; border: 0;
+    }
+
+    .gold-line {
+      width: 56px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1.4rem auto;
+    }
+
+    .section-label {
+      display: block; font-size: .68rem; font-weight: 500;
+      letter-spacing: .28em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: .9rem;
+    }
+
+    .section { padding: 7rem 0; }
+    .section-header { text-align: center; margin-bottom: 4rem; }
+    .section-header p { max-width: 480px; margin: 0 auto; }
+
+    /* ── REVEAL ANIMATIONS ──────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; }
+    .d3 { transition-delay: .3s; } .d4 { transition-delay: .4s; }
+    .d5 { transition-delay: .5s; } .d6 { transition-delay: .6s; }
+
+    /* ── BUTTONS ────────────────────────────────────────── */
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      font-size: .78rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--black);
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      padding: .95rem 2rem; border: none; border-radius: 3px;
+      cursor: pointer; position: relative; overflow: hidden;
+      transition: transform var(--ease), box-shadow var(--ease);
+    }
+    .btn-primary::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.18), transparent);
+      opacity: 0; transition: opacity var(--ease);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(201,168,76,.35); }
+    .btn-primary:hover::after { opacity: 1; }
+    .btn-primary:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .78rem; font-weight: 400; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--cream); background: transparent;
+      padding: .95rem 2rem; border: 1px solid rgba(245,240,232,.28); border-radius: 3px;
+      cursor: pointer; transition: border-color var(--ease), color var(--ease);
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-ghost:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+    /* ── NAV ────────────────────────────────────────────── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 1.6rem 0;
+      transition: background var(--ease), padding var(--ease), border-color var(--ease);
+      border-bottom: 1px solid transparent;
+    }
+    .nav.scrolled {
+      background: rgba(10,10,10,.94);
+      backdrop-filter: blur(14px);
+      padding: 1rem 0;
+      border-color: var(--border);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-family: var(--f-title); font-size: 1.35rem; font-weight: 600; color: var(--gold); letter-spacing: .05em; }
+    .nav-logo em { font-style: italic; font-weight: 300; color: rgba(245,240,232,.6); }
+
+    /* ── HERO ───────────────────────────────────────────── */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      overflow: hidden; background: var(--black);
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 55% at 50% 40%, rgba(201,168,76,.11) 0%, transparent 70%),
+        radial-gradient(ellipse 35% 25% at 25% 72%, rgba(74,94,58,.07) 0%, transparent 60%);
+    }
+    .hero::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .55;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 800px; padding: 2rem 1.5rem; }
+    .hero-pill {
+      display: inline-block; font-size: .63rem; font-weight: 500;
+      letter-spacing: .28em; text-transform: uppercase;
+      color: var(--gold); border: 1px solid rgba(201,168,76,.38);
+      padding: .38rem 1.2rem; border-radius: 50px; margin-bottom: 2rem;
+    }
+    .hero h1 { font-weight: 300; color: var(--cream); margin-bottom: 1.4rem; }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-size: 1rem; font-weight: 300; color: rgba(245,240,232,.62);
+      max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.8;
+    }
+    .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .hero-scroll {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      font-size: .62rem; letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(245,240,232,.35); z-index: 1;
+    }
+    .scroll-line {
+      width: 1px; height: 38px;
+      background: linear-gradient(to bottom, rgba(201,168,76,.55), transparent);
+      animation: sline 2.2s ease-in-out infinite;
+    }
+    @keyframes sline { 0%,100%{opacity:1;transform:scaleY(1)} 50%{opacity:.35;transform:scaleY(.5)} }
+
+    /* ── STATS BAR ──────────────────────────────────────── */
+    .stats-bar {
+      background: var(--black-soft);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+    .stats-inner { display: flex; justify-content: center; }
+    .stat-item {
+      flex: 1; max-width: 260px; text-align: center;
+      padding: 0 2rem; border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { font-family: var(--f-title); font-size: 2.2rem; font-weight: 500; color: var(--gold); }
+    .stat-label { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(245,240,232,.45); margin-top: .2rem; }
+
+    /* ── PRODUCT SECTION ────────────────────────────────── */
+    .product-section { background: var(--black-soft); padding: 7rem 0; }
+    .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+
+    /* CSS BOTTLE */
+    .bottle-scene { display: flex; flex-direction: column; align-items: center; padding: 3rem 0; }
+    .bottle-wrap {
+      display: flex; flex-direction: column; align-items: center;
+      filter: drop-shadow(0 28px 40px rgba(0,0,0,.6)) drop-shadow(0 4px 12px rgba(201,168,76,.08));
+      animation: floatBottle 5s ease-in-out infinite;
+    }
+    @keyframes floatBottle { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+    .b-cap {
+      width: 46px; height: 18px;
+      background: linear-gradient(150deg, #e8c96a, #c9a84c, #9e7e32);
+      border-radius: 4px 4px 0 0;
+      box-shadow: inset 0 2px 4px rgba(255,255,255,.2);
+      position: relative;
+    }
+    .b-cap::after {
+      content: ''; position: absolute; bottom: 0; left: -3px; right: -3px;
+      height: 4px; background: #9e7e32; border-radius: 0 0 2px 2px;
+    }
+    .b-neck {
+      width: 42px; height: 52px;
+      background: linear-gradient(160deg, #7a3f18, #9b5523, #7a3f18);
+      position: relative;
+    }
+    .b-neck::before {
+      content: ''; position: absolute; top: 6px; left: 6px;
+      width: 7px; height: 38px;
+      background: linear-gradient(to bottom, rgba(255,200,100,.22), transparent);
+      border-radius: 3px;
+    }
+    .b-shoulder {
+      width: 106px; height: 26px;
+      background: linear-gradient(160deg, #7a3f18, #9b5523, #7a3f18);
+      clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+    }
+    .b-body {
+      width: 136px; height: 226px;
+      background: linear-gradient(165deg,
+        #8b4513 0%, #a0521a 14%, #7b3b0e 34%,
+        #5a2d0a 54%, #6b3410 74%, #5a2d0a 100%);
+      border-radius: 0 0 12px 12px;
+      position: relative; overflow: hidden;
+    }
+    .b-shine {
+      position: absolute; top: 8px; left: 13px; width: 11px; height: 60%;
+      background: linear-gradient(to bottom, rgba(255,200,100,.26), transparent);
+      border-radius: 5px;
+    }
+    .b-shine2 {
+      position: absolute; top: 22px; right: 18px; width: 4px; height: 28%;
+      background: linear-gradient(to bottom, rgba(255,200,100,.13), transparent);
+      border-radius: 2px;
+    }
+    .b-label {
+      position: absolute; inset: 16px 10px 20px;
+      background: linear-gradient(175deg, #f9f4ea 0%, #f0e8d4 100%);
+      border-radius: 3px;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: space-between; padding: 12px 8px 10px;
+      box-shadow: inset 0 0 0 1px rgba(201,168,76,.3);
+    }
+    .lbl-brand { font-family: var(--f-title); font-size: .88rem; font-weight: 700; letter-spacing: .22em; color: var(--amber); text-align: center; }
+    .lbl-hr { width: 62%; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    .lbl-name { font-family: var(--f-title); font-size: .65rem; font-weight: 500; color: #333; text-align: center; line-height: 1.35; }
+    .lbl-origin { font-size: .44rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--moss); background: rgba(74,94,58,.1); padding: 2px 7px; border-radius: 10px; border: .5px solid rgba(74,94,58,.3); }
+    .lbl-vol { font-family: var(--f-title); font-size: .58rem; color: #999; letter-spacing: .08em; }
+    .lbl-badge { font-size: .42rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--black); background: var(--gold); padding: 2px 9px; border-radius: 2px; }
+    .b-base { width: 116px; height: 10px; background: linear-gradient(to right, #4a2408, #6b3410, #4a2408); border-radius: 0 0 8px 8px; }
+    .b-shadow { width: 130px; height: 18px; margin-top: 10px; background: radial-gradient(ellipse, rgba(0,0,0,.5) 0%, transparent 70%); }
+
+    /* Product info */
+    .p-origin { display: flex; align-items: center; gap: .6rem; font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 1.5rem; }
+    .p-origin::before { content: ''; width: 22px; height: 1px; background: var(--gold); flex-shrink: 0; }
+    .p-tags { display: flex; flex-wrap: wrap; gap: .45rem; margin: 1.8rem 0 2.2rem; }
+    .p-tag { font-size: .68rem; letter-spacing: .1em; color: var(--gold); border: 1px solid rgba(201,168,76,.32); padding: .3rem .8rem; border-radius: 50px; }
+    .p-price-row { display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem; }
+    .p-price { font-family: var(--f-title); font-size: 2.6rem; font-weight: 500; color: var(--gold); }
+    .p-price-note { font-size: .75rem; color: rgba(245,240,232,.45); line-height: 1.6; }
+
+    /* ── WHY HABASHIA ────────────────────────────────────── */
+    .why-section { padding: 7rem 0; background: var(--black); border-top: 1px solid var(--border); }
+    .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .why-card {
+      text-align: center; padding: 2.8rem 1.6rem;
+      border: 1px solid var(--border); border-radius: 8px;
+      background: linear-gradient(135deg, rgba(255,255,255,.018), transparent);
+      transition: border-color var(--ease), transform var(--ease);
+    }
+    .why-card:hover { border-color: rgba(201,168,76,.5); transform: translateY(-5px); }
+    .why-icon { width: 54px; height: 54px; margin: 0 auto 1.4rem; color: var(--gold); }
+    .why-title { font-family: var(--f-title); font-size: 1.32rem; color: var(--cream); margin-bottom: .65rem; }
+    .why-desc { font-size: .85rem; color: rgba(245,240,232,.58); line-height: 1.75; }
+
+    /* ── BENEFITS ───────────────────────────────────────── */
+    .benefits-section { padding: 7rem 0; background: linear-gradient(180deg, var(--black-soft) 0%, var(--black) 100%); }
+    .benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .ben-card {
+      padding: 2rem 1.6rem; background: rgba(255,255,255,.022); border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.056);
+      transition: background var(--ease), border-color var(--ease), transform var(--ease);
+    }
+    .ben-card:hover { background: rgba(255,255,255,.044); border-color: var(--border); transform: translateY(-3px); }
+    .ben-icon { width: 42px; height: 42px; margin-bottom: 1.2rem; color: var(--gold); }
+    .ben-title { font-family: var(--f-title); font-size: 1.2rem; color: var(--cream); margin-bottom: .45rem; }
+    .ben-desc { font-size: .82rem; color: rgba(245,240,232,.54); line-height: 1.72; }
+
+    /* ── HOW TO USE ──────────────────────────────────────── */
+    .usage-section { padding: 7rem 0; background: var(--cream); color: #1a1a1a; }
+    .usage-section .section-label { color: var(--moss); }
+    .usage-section h2 { color: #1a1a1a; }
+    .usage-section .section-header p { color: rgba(26,26,26,.62); }
+    .usage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; }
+    .usage-step { text-align: center; }
+    .usage-num { font-family: var(--f-title); font-size: 4.2rem; font-weight: 300; color: rgba(201,168,76,.38); line-height: 1; margin-bottom: .8rem; }
+    .usage-icon { width: 50px; height: 50px; margin: 0 auto 1.2rem; color: var(--moss); }
+    .usage-title { font-family: var(--f-title); font-size: 1.3rem; color: #1a1a1a; margin-bottom: .65rem; }
+    .usage-section p { color: rgba(26,26,26,.62); }
+
+    /* ── REVIEWS ────────────────────────────────────────── */
+    .reviews-section { padding: 7rem 0; background: var(--black); }
+    .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+    .rev-card { padding: 2rem 1.8rem; border: 1px solid var(--border); border-radius: 8px; background: rgba(255,255,255,.018); position: relative; }
+    .rev-card::before { content: '\201C'; position: absolute; top: .8rem; right: 1.4rem; font-family: Georgia, serif; font-size: 4.5rem; color: rgba(201,168,76,.12); line-height: 1; }
+    .rev-stars { color: var(--gold); font-size: .95rem; letter-spacing: .1em; margin-bottom: 1rem; }
+    .rev-text { font-family: var(--f-title); font-size: 1.05rem; font-weight: 300; font-style: italic; color: rgba(245,240,232,.72); line-height: 1.8; margin-bottom: 1.5rem; }
+    .rev-author { display: flex; align-items: center; gap: .8rem; }
+    .rev-avatar { width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: var(--f-title); font-size: 1rem; font-weight: 600; color: var(--cream); }
+    .rev-name { font-size: .8rem; font-weight: 500; color: var(--cream); }
+    .rev-detail { font-size: .68rem; color: rgba(245,240,232,.42); margin-top: .1rem; }
+    .rev-verified { display: flex; align-items: center; gap: .3rem; font-size: .64rem; color: var(--moss-light); margin-top: .9rem; letter-spacing: .08em; }
+
+    /* ── ORDER / CTA ─────────────────────────────────────── */
+    .order-section { padding: 7rem 0; background: linear-gradient(180deg, var(--black-soft), var(--black)); position: relative; overflow: hidden; text-align: center; }
+    .order-section::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(201,168,76,.06) 0%, transparent 70%); }
+    .order-inner { position: relative; max-width: 580px; margin: 0 auto; }
+    .order-price { font-family: var(--f-title); font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 500; color: var(--gold); line-height: 1; margin: 1.4rem 0 .4rem; }
+    .order-note { font-size: .78rem; color: rgba(245,240,232,.42); letter-spacing: .08em; margin-bottom: 2.5rem; }
+    .order-btn {
+      display: flex; align-items: center; justify-content: center; gap: .75rem;
+      font-size: .82rem; font-weight: 500; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--black);
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+      padding: 1.2rem 2.5rem; border: none; border-radius: 3px;
+      cursor: pointer; width: 100%; max-width: 380px; margin: 0 auto;
+      position: relative; overflow: hidden;
+      transition: transform var(--ease), box-shadow var(--ease);
+    }
+    .order-btn::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,.15), transparent); opacity: 0; transition: opacity var(--ease); }
+    .order-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 42px rgba(201,168,76,.4); }
+    .order-btn:hover::after { opacity: 1; }
+    .order-btn:active { transform: translateY(-1px); }
+    .order-btn:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+    .order-badges { display: flex; justify-content: center; gap: 2.5rem; margin-top: 2.2rem; flex-wrap: wrap; }
+    .o-badge { display: flex; align-items: center; gap: .45rem; font-size: .74rem; color: rgba(245,240,232,.5); }
+    .o-badge svg { color: var(--gold); flex-shrink: 0; }
+
+    /* ── FOOTER ─────────────────────────────────────────── */
+    .footer { padding: 3rem 0; border-top: 1px solid var(--border); background: var(--black); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+    .footer-logo { font-family: var(--f-title); font-size: 1.3rem; font-weight: 600; color: var(--gold); }
+    .footer-logo em { font-style: italic; font-weight: 300; color: rgba(245,240,232,.45); }
+    .footer-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; }
+    .footer-links a { font-size: .74rem; color: rgba(245,240,232,.42); letter-spacing: .07em; transition: color var(--ease); }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-links a:focus-visible { outline: 1px solid var(--gold); outline-offset: 2px; border-radius: 2px; }
+    .footer-copy { width: 100%; text-align: center; font-size: .68rem; color: rgba(245,240,232,.22); padding-top: 1.5rem; margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.04); letter-spacing: .04em; }
+
+    /* ── TOAST ──────────────────────────────────────────── */
+    .toast {
+      position: fixed; top: 1.5rem; right: 1.5rem; z-index: 9999;
+      background: #2d4226; color: var(--cream);
+      padding: 1rem 1.4rem; border-radius: 8px; border-left: 3px solid var(--gold);
+      display: flex; align-items: center; gap: .7rem;
+      font-size: .88rem; font-weight: 400;
+      box-shadow: 0 12px 40px rgba(0,0,0,.45);
+      transform: translateX(130%);
+      transition: transform .42s cubic-bezier(.34,1.56,.64,1);
+      max-width: 300px; pointer-events: none;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast svg { color: var(--gold); flex-shrink: 0; }
+
+    /* ── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .product-grid { gap: 3rem; }
+    }
+    @media (max-width: 768px) {
+      .section { padding: 4.5rem 0; }
+      .product-grid { grid-template-columns: 1fr; }
+      .bottle-scene { order: -1; }
+      .why-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+      .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+      .usage-grid { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; }
+      .reviews-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
+      .stats-inner { flex-wrap: wrap; }
+      .stat-item { flex: none; width: 50%; border-right: none; border-bottom: 1px solid var(--border); padding: 1rem; }
+      .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .hero-actions { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-ghost { width: 100%; max-width: 280px; justify-content: center; }
+      .benefits-grid { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; }
+      .order-badges { flex-direction: column; align-items: center; gap: 1rem; }
+      .toast { left: 1rem; right: 1rem; max-width: none; }
+    }
+    /* ── PAYMENT FORM ───────────────────────────────────── */
+    .stripe-form { width: 100%; max-width: 420px; margin: 1.5rem auto 0; text-align: left; }
+    .form-group { margin-bottom: 1.1rem; }
+    .form-label {
+      display: block; font-size: .68rem; letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(245,240,232,.5); margin-bottom: .45rem; font-weight: 400;
+    }
+    .form-input {
+      width: 100%; background: rgba(255,255,255,.04);
+      border: 1px solid var(--border); border-radius: 3px;
+      color: var(--cream); font-family: var(--f-body);
+      font-size: .93rem; font-weight: 300;
+      padding: .82rem 1rem; outline: none;
+      transition: border-color var(--ease);
+    }
+    .form-input::placeholder { color: rgba(245,240,232,.28); }
+    .form-input:focus { border-color: rgba(201,168,76,.7); }
+    .card-element-wrap {
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border); border-radius: 3px;
+      padding: .85rem 1rem;
+      transition: border-color var(--ease);
+    }
+    .card-element-wrap.focused { border-color: rgba(201,168,76,.7); }
+    .card-errors { color: #e07070; font-size: .78rem; margin-top: .45rem; min-height: 1.1em; }
+    .order-btn:disabled { opacity: .55; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+    .btn-spinner {
+      width: 17px; height: 17px; flex-shrink: 0;
+      border: 2px solid rgba(0,0,0,.25); border-top-color: var(--black);
+      border-radius: 50%; animation: spin .75s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .toast.error { background: #4a1c1c; border-left-color: #e07070; }
+    .toast.error svg { color: #e07070; }
+  </style>
+  <!-- Stripe.js — bibliothèque de paiement sécurisée, ne pas supprimer -->
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">
+  <svg id="toast-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+  </svg>
+  <span id="toast-msg">Paiement confirmé !</span>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav" aria-label="Navigation principale">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" aria-label="Habashia — Accueil">Habashia <em>Nigelle</em></a>
+      <a href="#commander" class="btn-primary" style="padding:.6rem 1.4rem;font-size:.72rem;">Commander</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero" aria-labelledby="hero-title">
+  <div class="hero-content">
+    <span class="hero-pill reveal">Hautes terres éthiopiennes · Récoltée à la main</span>
+    <h1 id="hero-title" class="reveal d1">
+      L'huile de nigelle<br><em>dans sa forme la plus pure</em>
+    </h1>
+    <p class="hero-sub reveal d2">
+      Variété Habashia d'Éthiopie. Première pression à froid.
+      Une huile d'exception chargée d'histoire et de bienfaits.
+    </p>
+    <div class="hero-actions reveal d3">
+      <a href="#commander" class="btn-primary" aria-label="Commander l'huile de nigelle maintenant">
+        Commander maintenant
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#produit" class="btn-ghost">Découvrir le produit</a>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="scroll-line"></div>
+    <span>Défiler</span>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" aria-label="Chiffres clés">
+  <div class="container">
+    <div class="stats-inner">
+      <div class="stat-item reveal"><div class="stat-num">100%</div><div class="stat-label">Pure &amp; non raffinée</div></div>
+      <div class="stat-item reveal d1"><div class="stat-num">&lt;27°C</div><div class="stat-label">Température d'extraction</div></div>
+      <div class="stat-item reveal d2"><div class="stat-num">2 400m</div><div class="stat-label">Altitude de culture</div></div>
+      <div class="stat-item reveal d3"><div class="stat-num">0</div><div class="stat-label">Additif ou conservateur</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT -->
+<section class="product-section" id="produit" aria-labelledby="prod-title">
+  <div class="container">
+    <div class="product-grid">
+
+      <!-- CSS Bottle -->
+      <div class="bottle-scene reveal">
+        <div class="bottle-wrap" role="img" aria-label="Flacon en verre ambré 100ml d'huile de nigelle Habashia">
+          <div class="b-cap"></div>
+          <div class="b-neck"></div>
+          <div class="b-shoulder"></div>
+          <div class="b-body">
+            <div class="b-shine"></div>
+            <div class="b-shine2"></div>
+            <div class="b-label">
+              <div class="lbl-brand">HABASHIA</div>
+              <div class="lbl-hr"></div>
+              <div class="lbl-name">Huile de Nigelle<br>Éthiopie</div>
+              <div class="lbl-origin">Hautes terres · 2 400 m</div>
+              <div class="lbl-hr"></div>
+              <div class="lbl-vol">100 ml · e</div>
+              <div class="lbl-badge">1ère Pression à Froid</div>
+            </div>
+          </div>
+          <div class="b-base"></div>
+        </div>
+        <div class="b-shadow" aria-hidden="true"></div>
+      </div>
+
+      <!-- Info -->
+      <div>
+        <span class="section-label reveal">Le produit</span>
+        <h2 id="prod-title" class="reveal d1">Huile de Nigelle<br>Habashia</h2>
+        <div class="p-origin reveal d2">Éthiopie · Hautes terres · Altitude 2 400 m</div>
+        <p class="reveal d2" style="margin-bottom:1rem;">
+          Un profil aromatique d'une rare intensité — notes terreuses, légèrement épicées, avec un fond chaud de miel sauvage. La variété Habashia est considérée comme l'une des plus riches en <strong style="color:var(--gold);font-weight:500;">thymoquinone</strong>, le principe actif de la nigelle.
+        </p>
+        <p class="reveal d2">
+          Extraite par pression mécanique à froid, sans chaleur ni solvant, cette huile conserve l'intégralité de ses actifs naturels. Sa couleur oscille entre l'or sombre et l'ambre — signe d'une matière première brute et authentique.
+        </p>
+        <div class="p-tags reveal d3">
+          <span class="p-tag">100% Pure</span>
+          <span class="p-tag">Non raffinée</span>
+          <span class="p-tag">Sans additifs</span>
+          <span class="p-tag">Certifiée naturelle</span>
+          <span class="p-tag">Verre ambré</span>
+          <span class="p-tag">Pressée à froid</span>
+        </div>
+        <div class="p-price-row reveal d4">
+          <div class="p-price">9,99 €</div>
+          <div class="p-price-note">Flacon 100 ml<br>Livraison offerte dès 2 flacons</div>
+        </div>
+        <a href="#commander" class="btn-primary reveal d5" aria-label="Commander l'huile de nigelle Habashia — 9,99 €">
+          Commander — 9,99 €
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY HABASHIA -->
+<section class="why-section" id="pourquoi" aria-labelledby="why-title">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label reveal">Différence</span>
+      <h2 id="why-title" class="reveal d1">Pourquoi Habashia ?</h2>
+      <div class="gold-line reveal d2"></div>
+      <p class="reveal d2">Trois raisons qui font de cette huile un choix d'exception parmi toutes les huiles de nigelle du marché.</p>
+    </div>
+    <div class="why-grid">
+
+      <div class="why-card reveal d1">
+        <svg class="why-icon" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+          <path d="M28 8C18 8 10 16 10 26c0 12 18 26 18 26s18-14 18-26c0-10-8-18-18-18z" stroke-linejoin="round"/>
+          <circle cx="28" cy="25" r="6"/>
+          <path d="M15 16l-5-5M41 16l5-5" stroke-linecap="round" opacity=".4"/>
+        </svg>
+        <h3 class="why-title">Origine éthiopienne rare</h3>
+        <p class="why-desc">Cultivée à plus de 2 400 mètres d'altitude dans les hautes terres éthiopiennes sur des sols volcaniques riches. Un terroir unique qui confère à la variété Habashia sa concentration exceptionnelle en principes actifs.</p>
+      </div>
+
+      <div class="why-card reveal d2">
+        <svg class="why-icon" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+          <circle cx="28" cy="28" r="20"/>
+          <line x1="28" y1="8" x2="28" y2="48"/>
+          <line x1="8" y1="28" x2="48" y2="28"/>
+          <line x1="14" y1="14" x2="42" y2="42"/>
+          <line x1="42" y1="14" x2="14" y2="42"/>
+          <circle cx="28" cy="28" r="7" fill="none"/>
+          <path d="M23 8l5 5 5-5M23 48l5-5 5 5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        </svg>
+        <h3 class="why-title">Pression à froid</h3>
+        <p class="why-desc">Aucune chaleur ne dépasse 27 °C lors de l'extraction. Cette méthode ancestrale préserve intégralement les acides gras essentiels, la thymoquinone et les antioxydants dans leur état natif.</p>
+      </div>
+
+      <div class="why-card reveal d3">
+        <svg class="why-icon" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+          <path d="M28 6L46 14v14c0 10-8 18-18 22C8 46 10 38 10 28V14z" stroke-linejoin="round"/>
+          <polyline points="20 28 25.5 33.5 36 22" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+        </svg>
+        <h3 class="why-title">Pureté certifiée</h3>
+        <p class="why-desc">Aucun additif, aucun conservateur, aucun solvant. 100% huile de Nigella sativa, variété Habashia. Chaque lot est analysé pour garantir une composition conforme aux plus hauts standards de qualité naturelle.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits-section" id="bienfaits" aria-labelledby="ben-title">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label reveal">Bienfaits</span>
+      <h2 id="ben-title" class="reveal d1">Six usages, un seul flacon</h2>
+      <div class="gold-line reveal d2"></div>
+    </div>
+    <div class="benefits-grid">
+
+      <div class="ben-card reveal d1">
+        <svg class="ben-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M22 4L38 11v12c0 9-7 16-16 19C13 39 6 32 6 23V11z" stroke-linejoin="round"/>
+          <polyline points="15 22 19.5 26.5 29 17" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+        </svg>
+        <h3 class="ben-title">Immunité</h3>
+        <p class="ben-desc">La thymoquinone renforce les défenses naturelles. Une cuillère à café quotidienne pour soutenir votre système immunitaire tout au long des saisons.</p>
+      </div>
+
+      <div class="ben-card reveal d2">
+        <svg class="ben-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="22" cy="22" r="16"/>
+          <path d="M14 20c0-4.4 3.6-8 8-8s8 3.6 8 8" opacity=".5"/>
+          <circle cx="16.5" cy="20" r="1.5" fill="currentColor"/>
+          <circle cx="27.5" cy="20" r="1.5" fill="currentColor"/>
+          <path d="M17 28c1-2 3-3 5-3s4 1 5 3" stroke-linecap="round"/>
+        </svg>
+        <h3 class="ben-title">Peau</h3>
+        <p class="ben-desc">Apaisante et régénérante, elle combat les inflammations cutanées, hydrate en profondeur et unifie le teint. Idéale pour les peaux sensibles ou sujettes à l'eczéma.</p>
+      </div>
+
+      <div class="ben-card reveal d3">
+        <svg class="ben-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <ellipse cx="22" cy="10" rx="7" ry="4"/>
+          <path d="M15 12c-2 4-1 10 1 14s4 8 4 14" stroke-linecap="round"/>
+          <path d="M29 12c2 4 1 10-1 14s-4 8-4 14" stroke-linecap="round"/>
+          <path d="M15 20c2 2 5 3 7 3s5-1 7-3" stroke-linecap="round"/>
+        </svg>
+        <h3 class="ben-title">Digestion</h3>
+        <p class="ben-desc">Traditionnellement utilisée pour apaiser les ballonnements et spasmes digestifs. Favorise un confort intestinal durable lorsque prise avant les repas.</p>
+      </div>
+
+      <div class="ben-card reveal d4">
+        <svg class="ben-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M14 6c-4 7-3 16 0 22s5 10 5 16" stroke-linecap="round"/>
+          <path d="M22 4c-2 7-1 14 1 20s2 10 0 18" stroke-linecap="round"/>
+          <path d="M30 6c4 7 3 16 0 22s-5 10-5 16" stroke-linecap="round"/>
+          <path d="M10 18c4-2 8-2 12-2s8 0 12 2" stroke-linecap="round" opacity=".45"/>
+        </svg>
+        <h3 class="ben-title">Cheveux</h3>
+        <p class="ben-desc">Nourrit le cuir chevelu, renforce les follicules pileux et réduit la chute. Un masque hebdomadaire pour des cheveux plus forts, brillants et résistants.</p>
+      </div>
+
+      <div class="ben-card reveal d5">
+        <svg class="ben-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="11" cy="11" r="5"/>
+          <circle cx="33" cy="11" r="5"/>
+          <circle cx="22" cy="33" r="5"/>
+          <line x1="15.5" y1="12.5" x2="28.5" y2="12.5"/>
+          <line x1="13.5" y1="15" x2="18.5" y2="28"/>
+          <line x1="30.5" y1="15" x2="25.5" y2="28"/>
+        </svg>
+        <h3 class="ben-title">Articulations</h3>
+        <p class="ben-desc">Ses propriétés anti-inflammatoires naturelles soulagent les raideurs articulaires. Application en massage sur les zones douloureuses pour un effet ciblé.</p>
+      </div>
+
+      <div class="ben-card reveal d6">
+        <svg class="ben-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="22" cy="22" r="17" opacity=".2"/>
+          <path d="M22 8l2.4 8h8.4l-6.8 4.9 2.6 8L22 24.2l-6.6 4.7 2.6-8L11.2 16h8.4z" stroke-linejoin="round"/>
+        </svg>
+        <h3 class="ben-title">Bien-être général</h3>
+        <p class="ben-desc">Adaptogène naturel, elle aide le corps à mieux gérer le stress oxydatif et la fatigue chronique. Un allié quotidien pour retrouver équilibre et vitalité.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO USE -->
+<section class="usage-section" id="utilisation" aria-labelledby="usage-title">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label reveal">Guide</span>
+      <h2 id="usage-title" class="reveal d1">Comment l'utiliser ?</h2>
+      <div class="gold-line reveal d2" style="background:linear-gradient(90deg,transparent,var(--moss),transparent);"></div>
+    </div>
+    <div class="usage-grid">
+
+      <div class="usage-step reveal d1">
+        <div class="usage-num">01</div>
+        <svg class="usage-icon" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M26 42V26"/><ellipse cx="26" cy="18" rx="8" ry="10"/>
+          <path d="M19.5 15.5c0-3.6 6.5-5 6.5-5s6.5 1.4 6.5 5" opacity=".4" stroke-linecap="round"/>
+        </svg>
+        <h3 class="usage-title">Voie interne</h3>
+        <p>1 cuillère à café (5 ml) le matin à jeun, pure ou mélangée à du miel ou au yaourt. Permet une absorption optimale des actifs. À renouveler chaque matin pendant au moins 4 semaines.</p>
+      </div>
+
+      <div class="usage-step reveal d2">
+        <div class="usage-num">02</div>
+        <svg class="usage-icon" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M20 42V22c0-2 2-4 4-4h0v-8a2 2 0 0 1 4 0v10" stroke-linecap="round"/>
+          <path d="M28 18v-6a2 2 0 0 1 4 0v8" stroke-linecap="round"/>
+          <path d="M32 20v-4a2 2 0 0 1 4 0v10c0 8-4 14-4 16H20" stroke-linecap="round"/>
+          <path d="M20 28c-2 0-4-2-4-4v-4c0-2 2-2 4 0" stroke-linecap="round"/>
+        </svg>
+        <h3 class="usage-title">Application cutanée</h3>
+        <p>Quelques gouttes sur peau propre, en massage circulaire jusqu'à pénétration. Masque cheveux : appliquer 30 minutes avant le shampooing, 1 à 2 fois par semaine sur le cuir chevelu.</p>
+      </div>
+
+      <div class="usage-step reveal d3">
+        <div class="usage-num">03</div>
+        <svg class="usage-icon" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M13 28c0 9 6 14 13 14s13-5 13-14" stroke-linecap="round"/>
+          <line x1="9" y1="28" x2="43" y2="28"/>
+          <path d="M22 18c0-5 4-8 4-12 0 4 4 7 4 12" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3 class="usage-title">Usage culinaire</h3>
+        <p>À ajouter en finition sur salades, houmous ou plats chauds. Ne jamais chauffer au-delà de 50 °C afin de préserver toutes ses propriétés nutritionnelles et son arôme caractéristique.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section" id="avis" aria-labelledby="rev-title">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label reveal">Témoignages</span>
+      <h2 id="rev-title" class="reveal d1">Ce qu'ils en disent</h2>
+      <div class="gold-line reveal d2"></div>
+    </div>
+    <div class="reviews-grid">
+
+      <article class="rev-card reveal d1" aria-label="Avis de Sarah M., 5 étoiles">
+        <div class="rev-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+        <blockquote class="rev-text">
+          "Je cherchais depuis des années une huile de nigelle avec un vrai profil aromatique. Celle-ci a un arôme puissant, presque animal — exactement ce qu'on attend d'une non-raffinée de qualité. Trois semaines et je me sens vraiment mieux au quotidien."
+        </blockquote>
+        <div class="rev-author">
+          <div class="rev-avatar" style="background:linear-gradient(135deg,#4a5e3a,#9e7e32);" aria-hidden="true">S</div>
+          <div><div class="rev-name">Sarah M.</div><div class="rev-detail">Naturopathe, Lyon</div></div>
+        </div>
+        <div class="rev-verified" aria-label="Achat vérifié">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Achat vérifié
+        </div>
+      </article>
+
+      <article class="rev-card reveal d2" aria-label="Avis de Karim T., 5 étoiles">
+        <div class="rev-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+        <blockquote class="rev-text">
+          "J'utilise la nigelle depuis dix ans. La Habashia est dans une autre catégorie. La couleur, la texture, l'odeur — tout indique une huile d'exception. En massage sur mes articulations, les résultats sont véritablement remarquables."
+        </blockquote>
+        <div class="rev-author">
+          <div class="rev-avatar" style="background:linear-gradient(135deg,#5c2d0a,#c9a84c);" aria-hidden="true">K</div>
+          <div><div class="rev-name">Karim T.</div><div class="rev-detail">Client fidèle, Paris</div></div>
+        </div>
+        <div class="rev-verified" aria-label="Achat vérifié">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Achat vérifié
+        </div>
+      </article>
+
+      <article class="rev-card reveal d3" aria-label="Avis de Amina D., 5 étoiles">
+        <div class="rev-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+        <blockquote class="rev-text">
+          "Commandé par curiosité pour la provenance éthiopienne. Reçu en trois jours, flacon en verre impeccable. L'huile est épaisse, dorée, avec un arôme chaud et épicé. Mon cuir chevelu me dit merci depuis le premier masque."
+        </blockquote>
+        <div class="rev-author">
+          <div class="rev-avatar" style="background:linear-gradient(135deg,#4a5e3a,#8b4513);" aria-hidden="true">A</div>
+          <div><div class="rev-name">Amina D.</div><div class="rev-detail">Blogueuse bien-être, Bordeaux</div></div>
+        </div>
+        <div class="rev-verified" aria-label="Achat vérifié">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Achat vérifié
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ORDER CTA -->
+<section class="order-section" id="commander" aria-labelledby="order-title">
+  <div class="container">
+    <div class="order-inner">
+      <span class="section-label reveal">Commander</span>
+      <h2 id="order-title" class="reveal d1">Commencez votre rituel</h2>
+      <div class="gold-line reveal d1"></div>
+      <p class="reveal d2" style="max-width:380px;margin:0 auto;">
+        Huile de Nigelle Habashia · Éthiopie · 100 ml<br>
+        Flacon en verre ambré · Première pression à froid
+      </p>
+      <div class="order-price reveal d2">9,99 €</div>
+      <p class="order-note reveal d2">TVA incluse · Flacon 100 ml · Stock limité</p>
+      <!-- Formulaire Stripe Elements — paiement sécurisé intégré -->
+      <form id="payment-form" class="stripe-form reveal d3" novalidate aria-label="Formulaire de paiement sécurisé">
+        <div class="form-group">
+          <label class="form-label" for="customer-email">Adresse e-mail</label>
+          <input type="email" id="customer-email" class="form-input"
+            placeholder="vous@exemple.com" required aria-required="true"
+            autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="card-element">Informations de carte</label>
+          <div id="card-element" class="card-element-wrap" role="group" aria-label="Saisie sécurisée des informations de carte bancaire"></div>
+          <div id="card-errors" class="card-errors" role="alert" aria-live="assertive"></div>
+        </div>
+        <button type="submit" class="order-btn" id="submit-btn" aria-label="Payer 9,99 € par carte bancaire">
+          <span id="btn-default" style="display:flex;align-items:center;gap:.75rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+            </svg>
+            Payer 9,99 € — Commander
+          </span>
+          <span id="btn-loading" style="display:none;align-items:center;gap:.75rem;">
+            <span class="btn-spinner" aria-hidden="true"></span>
+            Traitement en cours…
+          </span>
+        </button>
+      </form>
+      <div class="order-badges reveal d4">
+        <div class="o-badge">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+          Satisfait ou remboursé 30 jours
+        </div>
+        <div class="o-badge">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="1" y="3" width="15" height="13" rx="1"/>
+            <path d="M16 8h4l3 5v4h-7V8z"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+          Livraison sous 48–72 h
+        </div>
+        <div class="o-badge">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+          Fait avec passion
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">Habashia <em>Nigelle</em></div>
+      <nav aria-label="Liens du pied de page">
+        <ul class="footer-links">
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">Confidentialité</a></li>
+          <li><a href="#">CGV</a></li>
+          <li><a href="mailto:contact@habashia-nigelle.fr">contact@habashia-nigelle.fr</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p class="footer-copy">
+      © 2024 Habashia Nigelle · SIRET 000 000 000 00000 · Tous droits réservés ·
+      Les informations présentées ne se substituent pas à un avis médical professionnel.
+    </p>
+  </div>
+</footer>
+
+<script>
+  /* ── NAV SCROLL ─────────────────────────────────────── */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  }, { passive: true });
+
+  /* ── SCROLL REVEAL ───────────────────────────────────── */
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.hero .reveal').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), 100 + i * 130);
+    });
+    document.querySelectorAll('.stats-bar .reveal').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), 300 + i * 100);
+    });
+  });
+
+  /* ── SMOOTH SCROLL ───────────────────────────────────── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+      }
+    });
+  });
+
+  /* ── TOAST ───────────────────────────────────────────── */
+  let toastTimer;
+  function showToast(msg, isError = false) {
+    const toast = document.getElementById('toast');
+    const toastMsg = document.getElementById('toast-msg');
+    const toastIcon = document.getElementById('toast-icon');
+    toastMsg.textContent = msg;
+    toast.classList.toggle('error', isError);
+    // icône : check pour succès, croix pour erreur
+    toastIcon.innerHTML = isError
+      ? '<path d="M18 6L6 18M6 6l12 12"/>'
+      : '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>';
+    clearTimeout(toastTimer);
+    toast.classList.add('show');
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  /* ── STRIPE ELEMENTS ─────────────────────────────────── */
+  // Clé publique Stripe (safe côté client)
+  // Remplacez par votre vraie clé publiable sur https://dashboard.stripe.com/apikeys
+  const STRIPE_PK = 'pk_test_51TWLXV8zyMfvUXPqYiNf3tqfkH6Js9ZPD5YJasbfA1j2g9lbHWCZGcAEZPxBbUUmxhE3AdayJ4Ou2nKYpb3VZwL000v7xHxsL4';
+  const stripe   = Stripe(STRIPE_PK);
+  const elements = stripe.elements();
+
+  const cardElement = elements.create('card', {
+    style: {
+      base: {
+        color: '#f5f0e8',
+        fontFamily: "'Jost', system-ui, sans-serif",
+        fontSize: '15px',
+        fontSmoothing: 'antialiased',
+        '::placeholder': { color: 'rgba(245,240,232,0.3)' },
+        iconColor: '#c9a84c',
+      },
+      invalid: { color: '#e07070', iconColor: '#e07070' },
+    },
+  });
+  cardElement.mount('#card-element');
+
+  // Focus visuel sur le bloc carte
+  const cardWrap = document.querySelector('.card-element-wrap');
+  cardElement.on('focus', () => cardWrap.classList.add('focused'));
+  cardElement.on('blur',  () => cardWrap.classList.remove('focused'));
+
+  // Affichage inline des erreurs de saisie carte
+  cardElement.on('change', ({ error }) => {
+    document.getElementById('card-errors').textContent = error ? error.message : '';
+  });
+
+  /* ── SOUMISSION DU FORMULAIRE ────────────────────────── */
+  const form      = document.getElementById('payment-form');
+  const submitBtn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById('customer-email').value.trim();
+    if (!email || !email.includes('@')) {
+      document.getElementById('card-errors').textContent = 'Veuillez entrer une adresse e-mail valide.';
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      // 1. Demander un PaymentIntent au serveur
+      const resp = await fetch('/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await resp.json();
+      if (data.error) throw new Error(data.error);
+
+      // 2. Confirmer le paiement côté Stripe
+      const { paymentIntent, error } = await stripe.confirmCardPayment(data.clientSecret, {
+        payment_method: {
+          card: cardElement,
+          billing_details: { email },
+        },
+      });
+
+      if (error) {
+        document.getElementById('card-errors').textContent = error.message;
+        setLoading(false);
+      } else if (paymentIntent.status === 'succeeded') {
+        window.location.href = '/success.html';
+      }
+    } catch (err) {
+      showToast('Erreur de connexion au serveur. Réessayez.', true);
+      setLoading(false);
+    }
+  });
+
+  function setLoading(on) {
+    submitBtn.disabled = on;
+    document.getElementById('btn-default').style.display = on ? 'none'  : 'flex';
+    document.getElementById('btn-loading').style.display = on ? 'flex'  : 'none';
+  }
+</script>
+</body>
+</html>
