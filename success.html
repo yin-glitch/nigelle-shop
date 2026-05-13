@@ -113,6 +113,24 @@
     .recap-total .recap-key { font-weight: 500; color: var(--cream); font-size: .95rem; }
     .recap-total .recap-val { font-family: var(--f-title); font-size: 1.5rem; color: var(--gold); }
 
+    /* Bloc adresse de livraison */
+    .recap-separator {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,.18), transparent);
+      margin: .6rem 0;
+    }
+    .recap-section-label {
+      font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(245,240,232,.35); margin: .9rem 0 .5rem;
+    }
+    .recap-address {
+      font-size: .88rem; font-weight: 300;
+      color: rgba(245,240,232,.72); line-height: 1.85;
+      padding-bottom: .65rem;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    #succ-email { word-break: break-all; }
+
     /* Bouton retour */
     .btn-back {
       display: inline-flex; align-items: center; gap: .55rem;
@@ -183,6 +201,24 @@
         <span class="recap-key">Livraison</span>
         <span class="recap-val">48 – 72 h</span>
       </div>
+
+      <!-- Adresse de livraison (remplie par JS via sessionStorage) -->
+      <div id="addr-block" style="display:none;">
+        <div class="recap-separator"></div>
+        <div class="recap-section-label">Adresse de livraison</div>
+        <div class="recap-address">
+          <div id="succ-name"></div>
+          <div id="succ-adresse"></div>
+          <div><span id="succ-cp-ville"></span></div>
+          <div id="succ-pays" style="color:rgba(245,240,232,.45);font-size:.82rem;"></div>
+        </div>
+        <div class="recap-row" id="email-row" style="display:none;">
+          <span class="recap-key">E-mail</span>
+          <span class="recap-val" id="succ-email"></span>
+        </div>
+      </div>
+
+      <div class="recap-separator"></div>
       <div class="recap-row recap-total">
         <span class="recap-key">Total payé</span>
         <span class="recap-val">9,99 €</span>
@@ -202,5 +238,41 @@
     </footer>
 
   </div>
+<script>
+  // Lecture de l'adresse de livraison enregistrée avant le paiement
+  window.addEventListener('DOMContentLoaded', () => {
+    try {
+      const raw = sessionStorage.getItem('habashia_order');
+      if (!raw) return;
+      const order = JSON.parse(raw);
+
+      // Table de correspondance code ISO → nom du pays
+      const countries = {
+        FR:'France', BE:'Belgique', CH:'Suisse', LU:'Luxembourg',
+        CA:'Canada', MA:'Maroc', DZ:'Algérie', TN:'Tunisie',
+        SN:'Sénégal', CI:"Côte d'Ivoire", CM:'Cameroun',
+        DE:'Allemagne', ES:'Espagne', IT:'Italie',
+        NL:'Pays-Bas', GB:'Royaume-Uni', PT:'Portugal',
+      };
+
+      // Affichage du bloc adresse
+      if (order.prenom) {
+        const block = document.getElementById('addr-block');
+        block.style.display = '';
+        document.getElementById('succ-name').textContent    = `${order.prenom} ${order.nom}`;
+        document.getElementById('succ-adresse').textContent = order.adresse;
+        document.getElementById('succ-cp-ville').textContent = `${order.cp} ${order.ville}`;
+        document.getElementById('succ-pays').textContent    = countries[order.pays] || order.pays;
+      }
+
+      // Affichage de l'e-mail
+      if (order.email) {
+        const row = document.getElementById('email-row');
+        row.style.display = '';
+        document.getElementById('succ-email').textContent = order.email;
+      }
+    } catch (e) { /* sessionStorage indisponible ou JSON invalide */ }
+  });
+</script>
 </body>
 </html>

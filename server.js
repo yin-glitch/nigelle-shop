@@ -27,15 +27,37 @@ app.use(express.static(path.join(__dirname)));
 // le clientSecret au frontend pour confirmer le paiement.
 app.post('/create-payment-intent', async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, shipping } = req.body;
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount:   999,   // montant en centimes d'euro (9,99 €)
-      currency: 'eur',
+      amount:        999,   // montant en centimes d'euro (9,99 €)
+      currency:      'eur',
       receipt_email: email || undefined,
+
+      // Adresse de livraison (visible dans le dashboard Stripe)
+      ...(shipping && {
+        shipping: {
+          name:    `${shipping.prenom} ${shipping.nom}`,
+          address: {
+            line1:       shipping.adresse,
+            postal_code: shipping.cp,
+            city:        shipping.ville,
+            country:     shipping.pays,   // code ISO 2 lettres (ex. "FR")
+          },
+        },
+      }),
+
       metadata: {
         product: 'Huile de Nigelle Habashia — Éthiopie 100ml',
         source:  'habashia-nigelle.fr',
+        // Copie des infos de livraison dans les métadonnées Stripe
+        ...(shipping && {
+          livraison_nom:   `${shipping.prenom} ${shipping.nom}`,
+          livraison_rue:   shipping.adresse,
+          livraison_cp:    shipping.cp,
+          livraison_ville: shipping.ville,
+          livraison_pays:  shipping.pays,
+        }),
       },
     });
 
