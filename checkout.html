@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commande — Habashia Nigelle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    /* ── RESET ────────────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── VARIABLES ────────────────────────────────────────── */
+    :root {
+      --black:        #0a0a0a;
+      --black-soft:   #111111;
+      --gold:         #c9a84c;
+      --gold-light:   #e2c06a;
+      --gold-dark:    #9e7e32;
+      --cream:        #f5f0e8;
+      --moss:         #4a5e3a;
+      --moss-light:   #5c7249;
+      --amber:        #8b4513;
+      --border:       rgba(201,168,76,.2);
+      --border-soft:  rgba(255,255,255,.06);
+      --f-title:      'Cormorant Garamond', Georgia, serif;
+      --f-body:       'Jost', system-ui, sans-serif;
+      --ease:         0.35s cubic-bezier(.25,.46,.45,.94);
+    }
+
+    /* ── BASE ─────────────────────────────────────────────── */
+    html { font-size: 16px; }
+    body {
+      font-family: var(--f-body);
+      background: var(--black);
+      color: var(--cream);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; opacity: .45; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+    }
+    body::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background: radial-gradient(ellipse 70% 55% at 50% 35%, rgba(201,168,76,.07) 0%, transparent 70%);
+    }
+
+    h1, h2, h3 { font-family: var(--f-title); font-weight: 500; line-height: 1.2; }
+    a { color: inherit; text-decoration: none; }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0;
+      margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+      white-space: nowrap; border: 0;
+    }
+
+    /* ── NAV ──────────────────────────────────────────────── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,10,10,.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 1.1rem 0;
+    }
+    .nav-inner {
+      max-width: 1140px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--f-title); font-size: 1.3rem; font-weight: 600;
+      color: var(--gold); letter-spacing: .05em;
+    }
+    .nav-logo em { font-style: italic; font-weight: 300; color: rgba(245,240,232,.6); }
+    .nav-secure {
+      display: flex; align-items: center; gap: .45rem;
+      font-size: .68rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(245,240,232,.45);
+    }
+    .nav-secure svg { color: var(--gold); }
+    .nav-back {
+      display: flex; align-items: center; gap: .4rem;
+      font-size: .72rem; color: rgba(245,240,232,.45);
+      transition: color var(--ease);
+    }
+    .nav-back:hover { color: var(--gold); }
+    .nav-left { display: flex; align-items: center; gap: 1.4rem; }
+
+    /* ── MAIN LAYOUT ──────────────────────────────────────── */
+    .checkout-wrapper {
+      position: relative; z-index: 1;
+      max-width: 1140px; margin: 0 auto; padding: 0 1.5rem;
+      padding-top: 5.5rem; /* nav height */
+      padding-bottom: 4rem;
+    }
+
+    .checkout-title {
+      font-family: var(--f-title); font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+      font-weight: 400; color: var(--cream);
+      margin-bottom: 2.5rem;
+    }
+    .checkout-title em { font-style: italic; color: var(--gold); }
+
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* ── FORM COLUMN ──────────────────────────────────────── */
+    .form-col { min-width: 0; }
+
+    .form-section-title {
+      display: flex; align-items: center; gap: .55rem;
+      font-size: .68rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--gold); margin: 2rem 0 1.1rem;
+    }
+    .form-section-title:first-child { margin-top: 0; }
+    .form-section-title svg { flex-shrink: 0; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+    .form-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 1.8rem 0;
+    }
+    .form-group { margin-bottom: 1.1rem; }
+    .form-label {
+      display: block; font-size: .68rem; letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(245,240,232,.5); margin-bottom: .45rem; font-weight: 400;
+    }
+    .form-input {
+      width: 100%; background: rgba(255,255,255,.04);
+      border: 1px solid var(--border); border-radius: 3px;
+      color: var(--cream); font-family: var(--f-body);
+      font-size: .93rem; font-weight: 300;
+      padding: .82rem 1rem; outline: none;
+      transition: border-color var(--ease);
+    }
+    .form-input::placeholder { color: rgba(245,240,232,.28); }
+    .form-input:focus { border-color: rgba(201,168,76,.7); }
+
+    /* Select pays */
+    select.form-input {
+      appearance: none; -webkit-appearance: none; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+    select.form-input option { background: #1a1a1a; color: #f5f0e8; }
+
+    /* Stripe card element */
+    .card-element-wrap {
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border); border-radius: 3px;
+      padding: .85rem 1rem;
+      transition: border-color var(--ease);
+    }
+    .card-element-wrap.focused { border-color: rgba(201,168,76,.7); }
+    .card-errors { color: #e07070; font-size: .78rem; margin-top: .45rem; min-height: 1.1em; }
+
+    /* Submit button */
+    .pay-btn {
+      display: flex; align-items: center; justify-content: center; gap: .75rem;
+      font-family: var(--f-body); font-size: .82rem; font-weight: 500;
+      letter-spacing: .15em; text-transform: uppercase;
+      color: var(--black);
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+      padding: 1.2rem 2.5rem; border: none; border-radius: 3px;
+      cursor: pointer; width: 100%;
+      position: relative; overflow: hidden;
+      transition: transform var(--ease), box-shadow var(--ease);
+      margin-top: .5rem;
+    }
+    .pay-btn::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.15), transparent);
+      opacity: 0; transition: opacity var(--ease);
+    }
+    .pay-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(201,168,76,.4); }
+    .pay-btn:hover::after { opacity: 1; }
+    .pay-btn:active { transform: translateY(-1px); }
+    .pay-btn:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+    .pay-btn:disabled { opacity: .55; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+
+    .btn-spinner {
+      width: 17px; height: 17px; flex-shrink: 0;
+      border: 2px solid rgba(0,0,0,.25); border-top-color: var(--black);
+      border-radius: 50%; animation: spin .75s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Trust strip below button */
+    .form-trust {
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 1.4rem; margin-top: 1.4rem;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: .4rem;
+      font-size: .72rem; color: rgba(245,240,232,.42);
+    }
+    .trust-item svg { color: var(--gold); flex-shrink: 0; }
+
+    /* ── SUMMARY COLUMN ───────────────────────────────────── */
+    .summary-col {
+      position: sticky; top: 5.5rem;
+    }
+    .summary-card {
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    /* Product header */
+    .summary-product {
+      display: flex; align-items: center; gap: 1.1rem;
+      padding: 1.6rem 1.8rem;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .product-thumb {
+      width: 60px; height: 72px; flex-shrink: 0;
+      display: flex; flex-direction: column; align-items: center;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,.5));
+    }
+    /* Mini CSS bottle */
+    .tb-cap      { width: 18px; height: 7px; background: linear-gradient(150deg,#e8c96a,#c9a84c,#9e7e32); border-radius: 2px 2px 0 0; }
+    .tb-neck     { width: 17px; height: 20px; background: linear-gradient(160deg,#7a3f18,#9b5523,#7a3f18); }
+    .tb-shoulder { width: 40px; height: 10px; background: linear-gradient(160deg,#7a3f18,#9b5523,#7a3f18); clip-path: polygon(30% 0%,70% 0%,100% 100%,0% 100%); }
+    .tb-body     { width: 50px; height: 84px; background: linear-gradient(165deg,#8b4513 0%,#a0521a 14%,#7b3b0e 34%,#5a2d0a 54%,#6b3410 74%,#5a2d0a 100%); border-radius: 0 0 5px 5px; position: relative; overflow: hidden; }
+    .tb-shine    { position: absolute; top: 4px; left: 5px; width: 4px; height: 55%; background: linear-gradient(to bottom,rgba(255,200,100,.22),transparent); border-radius: 2px; }
+    .tb-label    { position: absolute; inset: 6px 3px 7px; background: linear-gradient(175deg,#f9f4ea,#f0e8d4); border-radius: 2px; display: flex; align-items: center; justify-content: center; }
+    .tb-label-text { font-family: var(--f-title); font-size: .32rem; font-weight: 700; color: var(--amber); letter-spacing: .08em; }
+    .tb-base     { width: 44px; height: 4px; background: linear-gradient(to right,#4a2408,#6b3410,#4a2408); border-radius: 0 0 3px 3px; }
+
+    .summary-product-info { flex: 1; min-width: 0; }
+    .summary-product-name {
+      font-family: var(--f-title); font-size: 1.15rem; color: var(--cream);
+      margin-bottom: .25rem;
+    }
+    .summary-product-sub {
+      font-size: .72rem; color: rgba(245,240,232,.45); line-height: 1.6;
+    }
+    .summary-product-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .6rem; }
+    .s-tag {
+      font-size: .58rem; letter-spacing: .08em; color: var(--gold);
+      border: 1px solid rgba(201,168,76,.25); padding: .18rem .55rem; border-radius: 50px;
+    }
+    .summary-product-price {
+      font-family: var(--f-title); font-size: 1.6rem; color: var(--gold);
+      font-weight: 500; white-space: nowrap; align-self: flex-start;
+    }
+
+    /* Pricing rows */
+    .summary-pricing { padding: 1.2rem 1.8rem; }
+    .price-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .5rem 0; border-bottom: 1px solid rgba(255,255,255,.04);
+      font-size: .85rem;
+    }
+    .price-row:last-child { border-bottom: none; }
+    .price-key { color: rgba(245,240,232,.5); font-weight: 300; }
+    .price-val { color: var(--cream); font-weight: 400; }
+    .price-separator { height: 1px; background: linear-gradient(90deg,transparent,rgba(201,168,76,.18),transparent); margin: .5rem 0; }
+    .price-total .price-key { font-weight: 500; color: var(--cream); font-size: .92rem; }
+    .price-total .price-val { font-family: var(--f-title); font-size: 1.55rem; color: var(--gold); }
+
+    /* Badges */
+    .summary-badges {
+      display: flex; flex-direction: column; gap: .6rem;
+      padding: 1.2rem 1.8rem;
+      border-top: 1px solid var(--border-soft);
+    }
+    .sum-badge {
+      display: flex; align-items: center; gap: .55rem;
+      font-size: .76rem; color: rgba(245,240,232,.5);
+    }
+    .sum-badge svg { color: var(--gold); flex-shrink: 0; }
+
+    /* ── TOAST ────────────────────────────────────────────── */
+    .toast {
+      position: fixed; top: 5rem; right: 1.5rem; z-index: 9999;
+      background: #2d4226; color: var(--cream);
+      padding: 1rem 1.4rem; border-radius: 8px; border-left: 3px solid var(--gold);
+      display: flex; align-items: center; gap: .7rem;
+      font-size: .88rem; font-weight: 400;
+      box-shadow: 0 12px 40px rgba(0,0,0,.45);
+      transform: translateX(130%);
+      transition: transform .42s cubic-bezier(.34,1.56,.64,1);
+      max-width: 300px; pointer-events: none;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast.error { background: #4a1c1c; border-left-color: #e07070; }
+    .toast svg { color: var(--gold); flex-shrink: 0; }
+    .toast.error svg { color: #e07070; }
+
+    /* ── RESPONSIVE ───────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .checkout-grid {
+        grid-template-columns: 1fr;
+      }
+      .summary-col {
+        position: static;
+        order: -1; /* Summary above form on mobile */
+      }
+    }
+    @media (max-width: 540px) {
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+      .nav-back span { display: none; }
+      .toast { left: 1rem; right: 1rem; max-width: none; }
+      .form-trust { gap: .9rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">
+  <svg id="toast-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+  </svg>
+  <span id="toast-msg">Erreur de connexion.</span>
+</div>
+
+<!-- NAV -->
+<nav class="nav" aria-label="Navigation">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="/" class="nav-back" aria-label="Retour à la boutique">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>Retour à la boutique</span>
+      </a>
+      <a href="/" class="nav-logo" aria-label="Habashia — Accueil">Habashia <em>Nigelle</em></a>
+    </div>
+    <div class="nav-secure" aria-label="Paiement sécurisé SSL">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+      Paiement sécurisé
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="checkout-wrapper">
+  <h1 class="checkout-title">Finaliser ma <em>commande</em></h1>
+
+  <div class="checkout-grid">
+
+    <!-- ── FORM COLUMN ────────────────────────────────────── -->
+    <div class="form-col">
+      <form id="payment-form" novalidate aria-label="Formulaire de commande et paiement">
+
+        <!-- Adresse de livraison -->
+        <div class="form-section-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          Adresse de livraison
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="ship-prenom">Prénom</label>
+            <input type="text" id="ship-prenom" class="form-input"
+              placeholder="Jean" required aria-required="true" autocomplete="given-name">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ship-nom">Nom</label>
+            <input type="text" id="ship-nom" class="form-input"
+              placeholder="Dupont" required aria-required="true" autocomplete="family-name">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="ship-adresse">Adresse (numéro et rue)</label>
+          <input type="text" id="ship-adresse" class="form-input"
+            placeholder="12 rue des Oliviers" required aria-required="true"
+            autocomplete="address-line1">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="ship-cp">Code postal</label>
+            <input type="text" id="ship-cp" class="form-input"
+              placeholder="75001" required aria-required="true"
+              autocomplete="postal-code" inputmode="numeric">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ship-ville">Ville</label>
+            <input type="text" id="ship-ville" class="form-input"
+              placeholder="Paris" required aria-required="true"
+              autocomplete="address-level2">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="ship-pays">Pays</label>
+          <select id="ship-pays" class="form-input" required aria-required="true" autocomplete="country">
+            <option value="FR" selected>France</option>
+            <option value="BE">Belgique</option>
+            <option value="CH">Suisse</option>
+            <option value="LU">Luxembourg</option>
+            <option value="CA">Canada</option>
+            <option value="MA">Maroc</option>
+            <option value="DZ">Algérie</option>
+            <option value="TN">Tunisie</option>
+            <option value="SN">Sénégal</option>
+            <option value="CI">Côte d'Ivoire</option>
+            <option value="CM">Cameroun</option>
+            <option value="DE">Allemagne</option>
+            <option value="ES">Espagne</option>
+            <option value="IT">Italie</option>
+            <option value="NL">Pays-Bas</option>
+            <option value="GB">Royaume-Uni</option>
+            <option value="PT">Portugal</option>
+          </select>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <!-- Paiement sécurisé -->
+        <div class="form-section-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+          </svg>
+          Paiement sécurisé
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="customer-email">Adresse e-mail</label>
+          <input type="email" id="customer-email" class="form-input"
+            placeholder="vous@exemple.com" required aria-required="true"
+            autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="card-element">Informations de carte</label>
+          <div id="card-element" class="card-element-wrap" role="group"
+            aria-label="Saisie sécurisée des informations de carte bancaire"></div>
+          <div id="card-errors" class="card-errors" role="alert" aria-live="assertive"></div>
+        </div>
+
+        <button type="submit" class="pay-btn" id="submit-btn" aria-label="Payer 9,99 € par carte bancaire">
+          <span id="btn-default" style="display:flex;align-items:center;gap:.75rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+            </svg>
+            Payer 9,99 € — Commander
+          </span>
+          <span id="btn-loading" style="display:none;align-items:center;gap:.75rem;">
+            <span class="btn-spinner" aria-hidden="true"></span>
+            Traitement en cours…
+          </span>
+        </button>
+
+        <div class="form-trust" aria-label="Garanties de paiement">
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            Crypté SSL
+          </div>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            Satisfait ou remboursé 30 j
+          </div>
+          <div class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v4h-7V8z"/>
+              <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+            </svg>
+            Livraison 48–72 h
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- ── SUMMARY COLUMN ─────────────────────────────────── -->
+    <aside class="summary-col" aria-label="Récapitulatif de commande">
+      <div class="summary-card">
+
+        <!-- Product -->
+        <div class="summary-product">
+          <!-- Mini CSS bottle -->
+          <div class="product-thumb" role="img" aria-label="Flacon Habashia 100ml">
+            <div class="tb-cap"></div>
+            <div class="tb-neck"></div>
+            <div class="tb-shoulder"></div>
+            <div class="tb-body">
+              <div class="tb-shine"></div>
+              <div class="tb-label"><span class="tb-label-text">HABASHIA</span></div>
+            </div>
+            <div class="tb-base"></div>
+          </div>
+          <div class="summary-product-info">
+            <div class="summary-product-name">Huile de Nigelle Habashia</div>
+            <div class="summary-product-sub">Éthiopie · Hautes terres · 100 ml<br>Flacon verre ambré · 1ère pression à froid</div>
+            <div class="summary-product-tags">
+              <span class="s-tag">100% Pure</span>
+              <span class="s-tag">Non raffinée</span>
+              <span class="s-tag">Sans additifs</span>
+            </div>
+          </div>
+          <div class="summary-product-price">9,99 €</div>
+        </div>
+
+        <!-- Pricing breakdown -->
+        <div class="summary-pricing">
+          <div class="price-row">
+            <span class="price-key">Sous-total</span>
+            <span class="price-val">9,99 €</span>
+          </div>
+          <div class="price-row">
+            <span class="price-key">Livraison</span>
+            <span class="price-val" style="color:var(--moss-light);">Offerte</span>
+          </div>
+          <div class="price-separator"></div>
+          <div class="price-row price-total">
+            <span class="price-key">Total</span>
+            <span class="price-val">9,99 €</span>
+          </div>
+        </div>
+
+        <!-- Trust badges -->
+        <div class="summary-badges">
+          <div class="sum-badge">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 11 14 15 10"/>
+            </svg>
+            Satisfait ou remboursé 30 jours
+          </div>
+          <div class="sum-badge">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            Paiement 100% sécurisé — SSL
+          </div>
+          <div class="sum-badge">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v4h-7V8z"/>
+              <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+            </svg>
+            Expédition sous 48–72 h ouvrées
+          </div>
+          <div class="sum-badge">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+            Produit fait avec passion
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+  </div>
+</main>
+
+<script>
+  /* ── TOAST ──────────────────────────────────────────────── */
+  let toastTimer;
+  function showToast(msg, isError = false) {
+    const toast    = document.getElementById('toast');
+    const toastMsg = document.getElementById('toast-msg');
+    const toastIcon = document.getElementById('toast-icon');
+    toastMsg.textContent = msg;
+    toast.classList.toggle('error', isError);
+    toastIcon.innerHTML = isError
+      ? '<path d="M18 6L6 18M6 6l12 12"/>'
+      : '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>';
+    clearTimeout(toastTimer);
+    toast.classList.add('show');
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 4500);
+  }
+
+  /* ── STRIPE ELEMENTS ────────────────────────────────────── */
+  const STRIPE_PK = 'pk_test_51TWLXV8zyMfvUXPqYiNf3tqfkH6Js9ZPD5YJasbfA1j2g9lbHWCZGcAEZPxBbUUmxhE3AdayJ4Ou2nKYpb3VZwL000v7xHxsL4';
+  const stripe    = Stripe(STRIPE_PK);
+  const elements  = stripe.elements();
+
+  const cardElement = elements.create('card', {
+    disableLink: true,
+    style: {
+      base: {
+        color: '#f5f0e8',
+        fontFamily: "'Jost', system-ui, sans-serif",
+        fontSize: '15px',
+        fontSmoothing: 'antialiased',
+        '::placeholder': { color: 'rgba(245,240,232,0.3)' },
+        iconColor: '#c9a84c',
+      },
+      invalid: { color: '#e07070', iconColor: '#e07070' },
+    },
+  });
+  cardElement.mount('#card-element');
+
+  // Focus visuel sur le bloc carte
+  const cardWrap = document.querySelector('.card-element-wrap');
+  cardElement.on('focus', () => cardWrap.classList.add('focused'));
+  cardElement.on('blur',  () => cardWrap.classList.remove('focused'));
+
+  // Erreurs inline de saisie carte
+  cardElement.on('change', ({ error }) => {
+    document.getElementById('card-errors').textContent = error ? error.message : '';
+  });
+
+  /* ── SOUMISSION ─────────────────────────────────────────── */
+  const form      = document.getElementById('payment-form');
+  const submitBtn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const errEl = document.getElementById('card-errors');
+
+    // Collecte des champs d'adresse
+    const shipping = {
+      prenom:  document.getElementById('ship-prenom').value.trim(),
+      nom:     document.getElementById('ship-nom').value.trim(),
+      adresse: document.getElementById('ship-adresse').value.trim(),
+      cp:      document.getElementById('ship-cp').value.trim(),
+      ville:   document.getElementById('ship-ville').value.trim(),
+      pays:    document.getElementById('ship-pays').value,
+    };
+    const email = document.getElementById('customer-email').value.trim();
+
+    // Validation des champs requis
+    if (!shipping.prenom || !shipping.nom) {
+      errEl.textContent = 'Veuillez entrer votre prénom et votre nom.';
+      document.getElementById('ship-prenom').focus(); return;
+    }
+    if (!shipping.adresse) {
+      errEl.textContent = 'Veuillez entrer votre adresse de livraison.';
+      document.getElementById('ship-adresse').focus(); return;
+    }
+    if (!shipping.cp || !shipping.ville) {
+      errEl.textContent = 'Veuillez entrer votre code postal et votre ville.';
+      document.getElementById('ship-cp').focus(); return;
+    }
+    if (!email || !email.includes('@')) {
+      errEl.textContent = 'Veuillez entrer une adresse e-mail valide.';
+      document.getElementById('customer-email').focus(); return;
+    }
+    errEl.textContent = '';
+    setLoading(true);
+
+    // Sauvegarde pour success.html
+    sessionStorage.setItem('habashia_order', JSON.stringify({ ...shipping, email }));
+
+    try {
+      // 1. Créer le PaymentIntent côté serveur
+      const resp = await fetch('/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, shipping }),
+      });
+      const data = await resp.json();
+      if (data.error) throw new Error(data.error);
+
+      // 2. Confirmer le paiement
+      const { paymentIntent, error } = await stripe.confirmCardPayment(data.clientSecret, {
+        payment_method: {
+          card: cardElement,
+          billing_details: {
+            name:  `${shipping.prenom} ${shipping.nom}`,
+            email,
+            address: {
+              line1:       shipping.adresse,
+              postal_code: shipping.cp,
+              city:        shipping.ville,
+              country:     shipping.pays,
+            },
+          },
+        },
+      });
+
+      if (error) {
+        errEl.textContent = error.message;
+        setLoading(false);
+      } else if (paymentIntent.status === 'succeeded') {
+        window.location.href = '/success.html';
+      }
+    } catch (err) {
+      showToast('Erreur de connexion au serveur. Réessayez.', true);
+      setLoading(false);
+    }
+  });
+
+  function setLoading(on) {
+    submitBtn.disabled = on;
+    document.getElementById('btn-default').style.display = on ? 'none' : 'flex';
+    document.getElementById('btn-loading').style.display = on ? 'flex' : 'none';
+  }
+</script>
+</body>
+</html>
