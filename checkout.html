@@ -692,6 +692,20 @@
         errEl.textContent = error.message;
         setLoading(false);
       } else if (paymentIntent.status === 'succeeded') {
+        // 3. Envoyer l'e-mail de confirmation au vendeur (best-effort)
+        try {
+          await fetch('/send-confirmation', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              shipping,
+              email,
+              paymentIntentId: paymentIntent.id,
+            }),
+          });
+        } catch (_) {
+          // Échec silencieux : l'e-mail n'est pas critique pour le client
+        }
         window.location.href = '/success.html';
       }
     } catch (err) {
