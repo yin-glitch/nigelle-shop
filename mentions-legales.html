@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentions légales — Habashia Nigelle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --black:      #0a0a0a;
+      --gold:       #c9a84c;
+      --gold-light: #e2c06a;
+      --cream:      #f5f0e8;
+      --border:     rgba(201,168,76,.2);
+      --f-title:    'Cormorant Garamond', Georgia, serif;
+      --f-body:     'Jost', system-ui, sans-serif;
+      --ease:       0.3s cubic-bezier(.25,.46,.45,.94);
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--f-body);
+      background: var(--black);
+      color: var(--cream);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; opacity: .4; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+    }
+    body::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 20%, rgba(201,168,76,.06) 0%, transparent 70%);
+    }
+    a { color: var(--gold); text-decoration: none; transition: opacity var(--ease); }
+    a:hover { opacity: .75; }
+    h1, h2, h3 { font-family: var(--f-title); font-weight: 400; line-height: 1.2; }
+
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,10,10,.96); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border); padding: 1.1rem 0;
+    }
+    .nav-inner {
+      max-width: 900px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-family: var(--f-title); font-size: 1.25rem; font-weight: 500; color: var(--gold); }
+    .nav-logo em { font-style: italic; font-weight: 300; color: rgba(245,240,232,.5); }
+    .nav-back {
+      display: flex; align-items: center; gap: .4rem;
+      font-size: .72rem; color: rgba(245,240,232,.45);
+      transition: color var(--ease);
+    }
+    .nav-back:hover { color: var(--gold); opacity: 1; }
+
+    /* PAGE HERO */
+    .page-hero {
+      position: relative; z-index: 1;
+      padding: 9rem 1.5rem 4rem; text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-tag {
+      display: inline-block; font-size: .62rem; font-weight: 500;
+      letter-spacing: .28em; text-transform: uppercase;
+      color: var(--gold); border: 1px solid rgba(201,168,76,.3);
+      padding: .32rem 1rem; border-radius: 50px; margin-bottom: 1.4rem;
+    }
+    .page-hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); color: var(--cream); margin-bottom: .8rem; }
+    .page-hero .updated {
+      font-size: .72rem; color: rgba(245,240,232,.3); letter-spacing: .1em;
+      margin-top: .8rem;
+    }
+
+    /* CONTENT */
+    .content {
+      position: relative; z-index: 1;
+      max-width: 900px; margin: 0 auto;
+      padding: 4rem 1.5rem 6rem;
+    }
+    .section {
+      margin-bottom: 3.5rem;
+      padding-bottom: 3.5rem;
+      border-bottom: 1px solid rgba(201,168,76,.1);
+    }
+    .section:last-child { border-bottom: none; margin-bottom: 0; }
+
+    .section-num {
+      font-size: .6rem; font-weight: 500; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: .7rem; display: block;
+    }
+    h2 {
+      font-size: clamp(1.4rem, 3vw, 2rem); color: var(--cream);
+      margin-bottom: 1.4rem;
+    }
+    h3 {
+      font-family: var(--f-body); font-size: .82rem; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--gold); margin: 1.6rem 0 .6rem;
+    }
+    p { font-size: .93rem; font-weight: 300; color: rgba(245,240,232,.7); margin-bottom: .9rem; }
+    p:last-child { margin-bottom: 0; }
+    .info-grid {
+      display: grid; grid-template-columns: 180px 1fr; gap: .5rem 1.5rem;
+      font-size: .9rem;
+    }
+    .info-grid dt { color: rgba(245,240,232,.45); font-weight: 400; padding: .45rem 0; border-bottom: 1px solid rgba(255,255,255,.04); }
+    .info-grid dd { color: rgba(245,240,232,.82); font-weight: 300; padding: .45rem 0; border-bottom: 1px solid rgba(255,255,255,.04); }
+    .info-grid dt:last-of-type,
+    .info-grid dd:last-of-type { border-bottom: none; }
+    .placeholder {
+      display: inline-block; background: rgba(201,168,76,.1);
+      border: 1px dashed rgba(201,168,76,.3); border-radius: 3px;
+      padding: 0 .4rem; font-size: .82rem; color: rgba(201,168,76,.7);
+      font-style: italic;
+    }
+
+    /* FOOTER */
+    .footer {
+      position: relative; z-index: 1;
+      padding: 2.5rem 0; border-top: 1px solid var(--border);
+      background: var(--black);
+    }
+    .footer-inner {
+      max-width: 900px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo { font-family: var(--f-title); font-size: 1.1rem; color: var(--gold); }
+    .footer-logo em { font-style: italic; color: rgba(245,240,232,.4); }
+    .footer-links { display: flex; gap: 1.6rem; flex-wrap: wrap; list-style: none; }
+    .footer-links a { font-size: .72rem; color: rgba(245,240,232,.38); letter-spacing: .06em; }
+    .footer-links a:hover { color: var(--gold); opacity: 1; }
+    .footer-copy {
+      width: 100%; text-align: center; font-size: .65rem;
+      color: rgba(245,240,232,.18); padding-top: 1.2rem;
+      margin-top: 1.2rem; border-top: 1px solid rgba(255,255,255,.04);
+      letter-spacing: .04em;
+    }
+
+    @media (max-width: 600px) {
+      .info-grid { grid-template-columns: 1fr; gap: 0; }
+      .info-grid dt { border-bottom: none; padding-bottom: 0; color: var(--gold); font-size: .78rem; }
+      .info-grid dd { padding-top: .15rem; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Habashia <em>Nigelle</em></a>
+    <a href="/" class="nav-back">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Retour à la boutique
+    </a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <span class="page-tag">Informations légales</span>
+  <h1>Mentions légales</h1>
+  <p class="updated">Dernière mise à jour : mai 2025</p>
+</div>
+
+<main class="content">
+
+  <div class="section">
+    <span class="section-num">01</span>
+    <h2>Éditeur du site</h2>
+    <p>Le site <strong>habashia-nigelle.fr</strong> est édité par un auto-entrepreneur individuel dans le cadre d'une activité de vente en ligne de produits naturels.</p>
+    <dl class="info-grid">
+      <dt>Statut</dt>       <dd>Auto-entrepreneur (micro-entreprise)</dd>
+      <dt>SIRET</dt>        <dd><span class="placeholder">À compléter</span></dd>
+      <dt>Adresse</dt>      <dd><span class="placeholder">À compléter</span></dd>
+      <dt>E-mail</dt>       <dd><a href="mailto:byas1644@gmail.com">byas1644@gmail.com</a></dd>
+      <dt>Directeur de publication</dt><dd><span class="placeholder">Nom du responsable</span></dd>
+    </dl>
+  </div>
+
+  <div class="section">
+    <span class="section-num">02</span>
+    <h2>Hébergement</h2>
+    <p>Ce site est hébergé par :</p>
+    <dl class="info-grid">
+      <dt>Hébergeur</dt>    <dd><span class="placeholder">Nom de l'hébergeur</span></dd>
+      <dt>Adresse</dt>      <dd><span class="placeholder">Adresse de l'hébergeur</span></dd>
+      <dt>Site web</dt>     <dd><span class="placeholder">URL de l'hébergeur</span></dd>
+    </dl>
+  </div>
+
+  <div class="section">
+    <span class="section-num">03</span>
+    <h2>Propriété intellectuelle</h2>
+    <p>L'ensemble des éléments constituant ce site (textes, images, visuels, structure, code source) est protégé par le droit de la propriété intellectuelle et appartient à l'éditeur ou a fait l'objet d'une autorisation d'utilisation.</p>
+    <p>Toute reproduction, représentation, modification, publication ou adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite sauf autorisation écrite préalable de l'éditeur.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">04</span>
+    <h2>Responsabilité</h2>
+    <p>Les informations contenues sur ce site sont aussi précises que possible. Cependant, elles ne peuvent en aucun cas se substituer à un avis médical professionnel. L'éditeur décline toute responsabilité quant à l'interprétation ou à l'utilisation des informations présentées sur le site.</p>
+    <p>L'éditeur s'engage à faire ses meilleurs efforts pour sécuriser l'accès, la consultation et l'utilisation du site conformément aux règles de l'art et de l'état de la technique. Toutefois, sa responsabilité ne pourra être engagée en cas d'interruption ou d'indisponibilité du service.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">05</span>
+    <h2>Cookies</h2>
+    <p>Ce site peut utiliser des cookies techniques nécessaires à son bon fonctionnement (session de paiement Stripe). Aucun cookie publicitaire ou de profilage n'est déposé sans consentement préalable.</p>
+    <p>Pour en savoir plus, consultez notre <a href="/confidentialite.html">Politique de confidentialité</a>.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">06</span>
+    <h2>Médiation de la consommation</h2>
+    <p>Conformément aux articles L.611-1 et suivants du Code de la consommation relatifs au règlement amiable des litiges, l'éditeur adhère au service de médiation suivant :</p>
+    <p>En cas de litige non résolu à l'amiable, le consommateur peut recourir gratuitement au médiateur de la consommation. La plateforme européenne de règlement en ligne des litiges est accessible à l'adresse : <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a>.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">07</span>
+    <h2>Droit applicable</h2>
+    <p>Les présentes mentions légales sont régies par le droit français. En cas de litige, les tribunaux français seront seuls compétents.</p>
+    <p>Pour toute question, contactez-nous à <a href="mailto:byas1644@gmail.com">byas1644@gmail.com</a>.</p>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Habashia <em>Nigelle</em></div>
+    <nav aria-label="Liens du pied de page">
+      <ul class="footer-links">
+        <li><a href="/mentions-legales.html">Mentions légales</a></li>
+        <li><a href="/confidentialite.html">Confidentialité</a></li>
+        <li><a href="/cgv.html">CGV</a></li>
+        <li><a href="mailto:byas1644@gmail.com">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+  <p class="footer-copy">© 2025 Habashia Nigelle · Tous droits réservés · Les informations présentées ne se substituent pas à un avis médical.</p>
+</footer>
+
+</body>
+</html>

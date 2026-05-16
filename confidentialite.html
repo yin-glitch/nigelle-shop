@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Politique de confidentialité — Habashia Nigelle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --black:      #0a0a0a;
+      --gold:       #c9a84c;
+      --gold-light: #e2c06a;
+      --cream:      #f5f0e8;
+      --border:     rgba(201,168,76,.2);
+      --f-title:    'Cormorant Garamond', Georgia, serif;
+      --f-body:     'Jost', system-ui, sans-serif;
+      --ease:       0.3s cubic-bezier(.25,.46,.45,.94);
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--f-body);
+      background: var(--black);
+      color: var(--cream);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; opacity: .4; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+    }
+    body::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 20%, rgba(201,168,76,.06) 0%, transparent 70%);
+    }
+    a { color: var(--gold); text-decoration: none; transition: opacity var(--ease); }
+    a:hover { opacity: .75; }
+    h1, h2, h3 { font-family: var(--f-title); font-weight: 400; line-height: 1.2; }
+
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,10,10,.96); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border); padding: 1.1rem 0;
+    }
+    .nav-inner {
+      max-width: 900px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-family: var(--f-title); font-size: 1.25rem; font-weight: 500; color: var(--gold); }
+    .nav-logo em { font-style: italic; font-weight: 300; color: rgba(245,240,232,.5); }
+    .nav-back {
+      display: flex; align-items: center; gap: .4rem;
+      font-size: .72rem; color: rgba(245,240,232,.45);
+      transition: color var(--ease);
+    }
+    .nav-back:hover { color: var(--gold); opacity: 1; }
+
+    /* PAGE HERO */
+    .page-hero {
+      position: relative; z-index: 1;
+      padding: 9rem 1.5rem 4rem; text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-tag {
+      display: inline-block; font-size: .62rem; font-weight: 500;
+      letter-spacing: .28em; text-transform: uppercase;
+      color: var(--gold); border: 1px solid rgba(201,168,76,.3);
+      padding: .32rem 1rem; border-radius: 50px; margin-bottom: 1.4rem;
+    }
+    .page-hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); color: var(--cream); margin-bottom: .8rem; }
+    .page-hero .updated { font-size: .72rem; color: rgba(245,240,232,.3); letter-spacing: .1em; margin-top: .8rem; }
+
+    /* CONTENT */
+    .content {
+      position: relative; z-index: 1;
+      max-width: 900px; margin: 0 auto;
+      padding: 4rem 1.5rem 6rem;
+    }
+    .section {
+      margin-bottom: 3.5rem;
+      padding-bottom: 3.5rem;
+      border-bottom: 1px solid rgba(201,168,76,.1);
+    }
+    .section:last-child { border-bottom: none; margin-bottom: 0; }
+    .section-num {
+      font-size: .6rem; font-weight: 500; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: .7rem; display: block;
+    }
+    h2 { font-size: clamp(1.4rem, 3vw, 2rem); color: var(--cream); margin-bottom: 1.4rem; }
+    h3 {
+      font-family: var(--f-body); font-size: .82rem; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--gold); margin: 1.6rem 0 .6rem;
+    }
+    p { font-size: .93rem; font-weight: 300; color: rgba(245,240,232,.7); margin-bottom: .9rem; }
+    p:last-child { margin-bottom: 0; }
+    ul.legal-list { list-style: none; padding: 0; margin: .6rem 0 .9rem; }
+    ul.legal-list li {
+      font-size: .93rem; font-weight: 300; color: rgba(245,240,232,.7);
+      padding: .4rem 0 .4rem 1.2rem; position: relative;
+    }
+    ul.legal-list li::before {
+      content: ''; position: absolute; left: 0; top: .85rem;
+      width: 5px; height: 1px; background: var(--gold);
+    }
+
+    /* Data table */
+    .data-table {
+      width: 100%; border-collapse: collapse; margin: 1.2rem 0;
+      font-size: .88rem;
+    }
+    .data-table th {
+      text-align: left; font-size: .62rem; font-weight: 500;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--gold);
+      padding: .65rem 1rem; border-bottom: 1px solid rgba(201,168,76,.2);
+      background: rgba(201,168,76,.04);
+    }
+    .data-table td {
+      padding: .65rem 1rem; border-bottom: 1px solid rgba(255,255,255,.05);
+      color: rgba(245,240,232,.68); font-weight: 300; vertical-align: top;
+    }
+    .data-table td:first-child { color: var(--cream); font-weight: 400; white-space: nowrap; }
+    .data-table tr:last-child td { border-bottom: none; }
+
+    /* Rights grid */
+    .rights-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem; margin: 1.2rem 0;
+    }
+    .right-card {
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(201,168,76,.15);
+      border-radius: 8px; padding: 1.2rem;
+    }
+    .right-card h4 {
+      font-family: var(--f-body); font-size: .78rem; font-weight: 500;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: .5rem;
+    }
+    .right-card p { font-size: .82rem; color: rgba(245,240,232,.55); margin: 0; }
+
+    /* FOOTER */
+    .footer {
+      position: relative; z-index: 1;
+      padding: 2.5rem 0; border-top: 1px solid var(--border);
+      background: var(--black);
+    }
+    .footer-inner {
+      max-width: 900px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo { font-family: var(--f-title); font-size: 1.1rem; color: var(--gold); }
+    .footer-logo em { font-style: italic; color: rgba(245,240,232,.4); }
+    .footer-links { display: flex; gap: 1.6rem; flex-wrap: wrap; list-style: none; }
+    .footer-links a { font-size: .72rem; color: rgba(245,240,232,.38); letter-spacing: .06em; }
+    .footer-links a:hover { color: var(--gold); opacity: 1; }
+    .footer-copy {
+      width: 100%; text-align: center; font-size: .65rem;
+      color: rgba(245,240,232,.18); padding-top: 1.2rem;
+      margin-top: 1.2rem; border-top: 1px solid rgba(255,255,255,.04);
+      letter-spacing: .04em;
+    }
+
+    @media (max-width: 680px) {
+      .data-table { display: block; overflow-x: auto; }
+      .rights-grid { grid-template-columns: 1fr 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 440px) {
+      .rights-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Habashia <em>Nigelle</em></a>
+    <a href="/" class="nav-back">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Retour à la boutique
+    </a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <span class="page-tag">RGPD &amp; vie privée</span>
+  <h1>Politique de confidentialité</h1>
+  <p class="updated">Dernière mise à jour : mai 2025</p>
+</div>
+
+<main class="content">
+
+  <div class="section">
+    <span class="section-num">01</span>
+    <h2>Responsable du traitement</h2>
+    <p>Le responsable du traitement des données personnelles collectées sur le site <strong>habashia-nigelle.fr</strong> est l'exploitant du site, auto-entrepreneur individuel, joignable à l'adresse : <a href="mailto:byas1644@gmail.com">byas1644@gmail.com</a>.</p>
+    <p>Nous nous engageons à traiter vos données personnelles conformément au Règlement Général sur la Protection des Données (RGPD — Règlement UE 2016/679) et à la loi Informatique et Libertés modifiée.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">02</span>
+    <h2>Données collectées</h2>
+    <p>Lors d'une commande, nous collectons uniquement les données strictement nécessaires au traitement et à la livraison :</p>
+    <table class="data-table" aria-label="Données personnelles collectées">
+      <thead>
+        <tr>
+          <th>Donnée</th>
+          <th>Finalité</th>
+          <th>Durée de conservation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Nom &amp; prénom</td>
+          <td>Identification, livraison, e-mail de confirmation</td>
+          <td>3 ans après la dernière commande</td>
+        </tr>
+        <tr>
+          <td>Adresse postale</td>
+          <td>Expédition du colis</td>
+          <td>3 ans après la dernière commande</td>
+        </tr>
+        <tr>
+          <td>Adresse e-mail</td>
+          <td>Confirmation de commande, suivi</td>
+          <td>3 ans après la dernière commande</td>
+        </tr>
+        <tr>
+          <td>Données de paiement</td>
+          <td>Traitement sécurisé via Stripe (non stockées par nous)</td>
+          <td>Non conservées — traitées par Stripe</td>
+        </tr>
+        <tr>
+          <td>Données techniques (IP, navigateur)</td>
+          <td>Sécurité et bon fonctionnement du site</td>
+          <td>12 mois maximum</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Nous ne collectons aucune donnée sensible (santé, origines ethniques, opinions politiques ou religieuses).</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">03</span>
+    <h2>Base légale des traitements</h2>
+    <p>Les traitements de données que nous effectuons reposent sur les bases légales suivantes :</p>
+    <ul class="legal-list">
+      <li><strong style="color:var(--cream);">Exécution du contrat</strong> — traitement de la commande, livraison, envoi de la confirmation</li>
+      <li><strong style="color:var(--cream);">Obligation légale</strong> — conservation des documents comptables conformément à la loi française</li>
+      <li><strong style="color:var(--cream);">Intérêt légitime</strong> — sécurité du site et prévention de la fraude</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <span class="section-num">04</span>
+    <h2>Destinataires des données</h2>
+    <p>Vos données ne sont pas vendues ni louées à des tiers. Elles peuvent être transmises aux sous-traitants suivants, dans le seul but de traiter votre commande :</p>
+    <table class="data-table" aria-label="Sous-traitants et destinataires">
+      <thead>
+        <tr>
+          <th>Prestataire</th>
+          <th>Rôle</th>
+          <th>Pays</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Stripe, Inc.</td>
+          <td>Traitement sécurisé des paiements par carte</td>
+          <td>États-Unis (Privacy Shield / clauses types)</td>
+        </tr>
+        <tr>
+          <td>Google (Gmail / SMTP)</td>
+          <td>Envoi des e-mails de confirmation</td>
+          <td>États-Unis (Privacy Shield / clauses types)</td>
+        </tr>
+        <tr>
+          <td>Transporteur postal</td>
+          <td>Livraison du colis (nom &amp; adresse uniquement)</td>
+          <td>France</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Ces prestataires agissent en qualité de sous-traitants et s'engagent contractuellement à protéger vos données. Ils ne sont pas autorisés à les utiliser à d'autres fins.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">05</span>
+    <h2>Vos droits</h2>
+    <p>Conformément au RGPD, vous disposez des droits suivants sur vos données personnelles :</p>
+    <div class="rights-grid">
+      <div class="right-card">
+        <h4>Accès</h4>
+        <p>Obtenir une copie de toutes les données vous concernant que nous traitons.</p>
+      </div>
+      <div class="right-card">
+        <h4>Rectification</h4>
+        <p>Faire corriger des données inexactes ou incomplètes vous concernant.</p>
+      </div>
+      <div class="right-card">
+        <h4>Effacement</h4>
+        <p>Demander la suppression de vos données, sous réserve des obligations légales.</p>
+      </div>
+      <div class="right-card">
+        <h4>Opposition</h4>
+        <p>Vous opposer à un traitement basé sur notre intérêt légitime.</p>
+      </div>
+      <div class="right-card">
+        <h4>Portabilité</h4>
+        <p>Recevoir vos données dans un format structuré et lisible par machine.</p>
+      </div>
+      <div class="right-card">
+        <h4>Limitation</h4>
+        <p>Demander la suspension temporaire d'un traitement vous concernant.</p>
+      </div>
+    </div>
+    <p>Pour exercer ces droits, contactez-nous à <a href="mailto:byas1644@gmail.com">byas1644@gmail.com</a>. Nous répondrons dans un délai de 30 jours. En cas de réponse insatisfaisante, vous pouvez introduire une réclamation auprès de la <a href="https://www.cnil.fr" target="_blank" rel="noopener">CNIL</a>.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">06</span>
+    <h2>Sécurité des données</h2>
+    <p>Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données contre la perte, l'accès non autorisé, la divulgation ou la modification :</p>
+    <ul class="legal-list">
+      <li>Connexion chiffrée HTTPS (certificat SSL) sur l'ensemble du site</li>
+      <li>Aucun stockage des données de carte bancaire — traitées directement par Stripe (certifié PCI-DSS niveau 1)</li>
+      <li>Accès aux données restreint au seul responsable de traitement</li>
+      <li>Variables d'environnement sécurisées pour les clés API</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <span class="section-num">07</span>
+    <h2>Cookies</h2>
+    <h3>Cookies strictement nécessaires</h3>
+    <p>Ce site utilise uniquement des cookies techniques indispensables à son fonctionnement. Aucun cookie publicitaire, de profilage ou de suivi tiers n'est déposé.</p>
+    <table class="data-table" aria-label="Cookies utilisés">
+      <thead>
+        <tr><th>Cookie</th><th>Origine</th><th>Durée</th><th>Finalité</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>__stripe_sid</td>
+          <td>Stripe</td>
+          <td>Session</td>
+          <td>Sécurité et prévention de la fraude lors du paiement</td>
+        </tr>
+        <tr>
+          <td>__stripe_mid</td>
+          <td>Stripe</td>
+          <td>1 an</td>
+          <td>Identifiant machine pour la détection de fraude</td>
+        </tr>
+        <tr>
+          <td>sessionStorage</td>
+          <td>Habashia Nigelle</td>
+          <td>Session</td>
+          <td>Transfert de l'adresse de livraison vers la page de confirmation</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Ces cookies étant strictement nécessaires au fonctionnement du service de paiement, ils ne requièrent pas de consentement préalable (article 82 de la loi Informatique et Libertés).</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">08</span>
+    <h2>Transferts hors UE</h2>
+    <p>Certains de nos prestataires (Stripe, Google) peuvent traiter des données en dehors de l'Union européenne, notamment aux États-Unis. Ces transferts sont encadrés par des garanties appropriées (clauses contractuelles types approuvées par la Commission européenne) conformément au RGPD.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">09</span>
+    <h2>Modifications de la politique</h2>
+    <p>Cette politique peut être mise à jour à tout moment. La date de dernière modification est indiquée en haut de page. Nous vous encourageons à la consulter régulièrement.</p>
+    <p>Pour toute question relative à la protection de vos données, contactez-nous à <a href="mailto:byas1644@gmail.com">byas1644@gmail.com</a>.</p>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Habashia <em>Nigelle</em></div>
+    <nav aria-label="Liens du pied de page">
+      <ul class="footer-links">
+        <li><a href="/mentions-legales.html">Mentions légales</a></li>
+        <li><a href="/confidentialite.html">Confidentialité</a></li>
+        <li><a href="/cgv.html">CGV</a></li>
+        <li><a href="mailto:byas1644@gmail.com">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+  <p class="footer-copy">© 2025 Habashia Nigelle · Tous droits réservés · Les informations présentées ne se substituent pas à un avis médical.</p>
+</footer>
+
+</body>
+</html>

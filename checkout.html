@@ -300,6 +300,30 @@
     .toast svg { color: var(--gold); flex-shrink: 0; }
     .toast.error svg { color: #e07070; }
 
+    /* ── FOOTER ───────────────────────────────────────────── */
+    .footer {
+      position: relative; z-index: 1;
+      padding: 2rem 0; border-top: 1px solid var(--border);
+      background: var(--black);
+    }
+    .footer-inner {
+      max-width: 1140px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-links { display: flex; gap: 1.6rem; flex-wrap: wrap; list-style: none; }
+    .footer-links a {
+      font-size: .7rem; color: rgba(245,240,232,.32);
+      letter-spacing: .06em; transition: color var(--ease);
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy {
+      width: 100%; text-align: center; font-size: .62rem;
+      color: rgba(245,240,232,.15); padding-top: 1rem;
+      margin-top: 1rem; border-top: 1px solid rgba(255,255,255,.04);
+      letter-spacing: .04em;
+    }
+
     /* ── RESPONSIVE ───────────────────────────────────────── */
     @media (max-width: 900px) {
       .checkout-grid {
@@ -569,6 +593,20 @@
 
   </div>
 </main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <nav aria-label="Liens légaux">
+      <ul class="footer-links">
+        <li><a href="/mentions-legales.html">Mentions légales</a></li>
+        <li><a href="/confidentialite.html">Confidentialité</a></li>
+        <li><a href="/cgv.html">CGV</a></li>
+        <li><a href="mailto:byas1644@gmail.com">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+  <p class="footer-copy">© 2025 Habashia Nigelle · Paiement 100 % sécurisé via Stripe</p>
+</footer>
 
 <script>
   /* ── TOAST ──────────────────────────────────────────────── */

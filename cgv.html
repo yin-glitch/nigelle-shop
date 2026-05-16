@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conditions Générales de Vente — Habashia Nigelle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --black:      #0a0a0a;
+      --gold:       #c9a84c;
+      --gold-light: #e2c06a;
+      --cream:      #f5f0e8;
+      --moss:       #4a5e3a;
+      --border:     rgba(201,168,76,.2);
+      --f-title:    'Cormorant Garamond', Georgia, serif;
+      --f-body:     'Jost', system-ui, sans-serif;
+      --ease:       0.3s cubic-bezier(.25,.46,.45,.94);
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--f-body);
+      background: var(--black);
+      color: var(--cream);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; opacity: .4; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+    }
+    body::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 20%, rgba(201,168,76,.06) 0%, transparent 70%);
+    }
+    a { color: var(--gold); text-decoration: none; transition: opacity var(--ease); }
+    a:hover { opacity: .75; }
+    h1, h2, h3 { font-family: var(--f-title); font-weight: 400; line-height: 1.2; }
+
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,10,10,.96); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border); padding: 1.1rem 0;
+    }
+    .nav-inner {
+      max-width: 900px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-family: var(--f-title); font-size: 1.25rem; font-weight: 500; color: var(--gold); }
+    .nav-logo em { font-style: italic; font-weight: 300; color: rgba(245,240,232,.5); }
+    .nav-back {
+      display: flex; align-items: center; gap: .4rem;
+      font-size: .72rem; color: rgba(245,240,232,.45);
+      transition: color var(--ease);
+    }
+    .nav-back:hover { color: var(--gold); opacity: 1; }
+
+    /* PAGE HERO */
+    .page-hero {
+      position: relative; z-index: 1;
+      padding: 9rem 1.5rem 4rem; text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-tag {
+      display: inline-block; font-size: .62rem; font-weight: 500;
+      letter-spacing: .28em; text-transform: uppercase;
+      color: var(--gold); border: 1px solid rgba(201,168,76,.3);
+      padding: .32rem 1rem; border-radius: 50px; margin-bottom: 1.4rem;
+    }
+    .page-hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); color: var(--cream); margin-bottom: .8rem; }
+    .page-hero .updated { font-size: .72rem; color: rgba(245,240,232,.3); letter-spacing: .1em; margin-top: .8rem; }
+
+    /* CONTENT */
+    .content {
+      position: relative; z-index: 1;
+      max-width: 900px; margin: 0 auto;
+      padding: 4rem 1.5rem 6rem;
+    }
+    .section {
+      margin-bottom: 3.5rem;
+      padding-bottom: 3.5rem;
+      border-bottom: 1px solid rgba(201,168,76,.1);
+    }
+    .section:last-child { border-bottom: none; margin-bottom: 0; }
+    .section-num {
+      font-size: .6rem; font-weight: 500; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: .7rem; display: block;
+    }
+    h2 { font-size: clamp(1.4rem, 3vw, 2rem); color: var(--cream); margin-bottom: 1.4rem; }
+    h3 {
+      font-family: var(--f-body); font-size: .82rem; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--gold); margin: 1.6rem 0 .6rem;
+    }
+    p { font-size: .93rem; font-weight: 300; color: rgba(245,240,232,.7); margin-bottom: .9rem; }
+    p:last-child { margin-bottom: 0; }
+    ul.legal-list {
+      list-style: none; padding: 0; margin: .6rem 0 .9rem;
+    }
+    ul.legal-list li {
+      font-size: .93rem; font-weight: 300; color: rgba(245,240,232,.7);
+      padding: .4rem 0 .4rem 1.2rem; position: relative;
+    }
+    ul.legal-list li::before {
+      content: ''; position: absolute; left: 0; top: .85rem;
+      width: 5px; height: 1px; background: var(--gold);
+    }
+
+    /* Highlight card */
+    .card {
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.4rem 1.8rem;
+      margin: 1.2rem 0;
+    }
+    .card-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .5rem 0; border-bottom: 1px solid rgba(255,255,255,.05);
+      font-size: .9rem;
+    }
+    .card-row:last-child { border-bottom: none; }
+    .card-key { color: rgba(245,240,232,.5); font-weight: 300; }
+    .card-val { color: var(--cream); font-weight: 400; }
+    .card-val.green { color: #6db87a; }
+    .card-val.gold { font-family: var(--f-title); font-size: 1.3rem; color: var(--gold); }
+
+    /* Badge satisfait */
+    .badge-row {
+      display: flex; align-items: center; gap: .7rem;
+      background: rgba(74,94,58,.1); border: 1px solid rgba(74,94,58,.28);
+      border-radius: 8px; padding: 1rem 1.4rem; margin: 1.2rem 0;
+    }
+    .badge-row svg { color: #6db87a; flex-shrink: 0; }
+    .badge-row p { color: rgba(245,240,232,.7); margin: 0; font-size: .9rem; }
+
+    /* FOOTER */
+    .footer {
+      position: relative; z-index: 1;
+      padding: 2.5rem 0; border-top: 1px solid var(--border);
+      background: var(--black);
+    }
+    .footer-inner {
+      max-width: 900px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo { font-family: var(--f-title); font-size: 1.1rem; color: var(--gold); }
+    .footer-logo em { font-style: italic; color: rgba(245,240,232,.4); }
+    .footer-links { display: flex; gap: 1.6rem; flex-wrap: wrap; list-style: none; }
+    .footer-links a { font-size: .72rem; color: rgba(245,240,232,.38); letter-spacing: .06em; }
+    .footer-links a:hover { color: var(--gold); opacity: 1; }
+    .footer-copy {
+      width: 100%; text-align: center; font-size: .65rem;
+      color: rgba(245,240,232,.18); padding-top: 1.2rem;
+      margin-top: 1.2rem; border-top: 1px solid rgba(255,255,255,.04);
+      letter-spacing: .04em;
+    }
+
+    @media (max-width: 600px) {
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Habashia <em>Nigelle</em></a>
+    <a href="/" class="nav-back">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Retour à la boutique
+    </a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <span class="page-tag">Conditions de vente</span>
+  <h1>Conditions Générales de Vente</h1>
+  <p class="updated">Dernière mise à jour : mai 2025</p>
+</div>
+
+<main class="content">
+
+  <div class="section">
+    <span class="section-num">01</span>
+    <h2>Objet et champ d'application</h2>
+    <p>Les présentes Conditions Générales de Vente (CGV) régissent les relations contractuelles entre tout acheteur (ci-après « le Client ») et le vendeur exploitant le site <strong>habashia-nigelle.fr</strong> (ci-après « le Vendeur »), auto-entrepreneur individuel.</p>
+    <p>Toute commande passée sur le site implique l'acceptation pleine et entière des présentes CGV. Ces CGV prévalent sur tout autre document.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">02</span>
+    <h2>Produits</h2>
+    <p>Le Vendeur propose à la vente le produit suivant :</p>
+    <div class="card">
+      <div class="card-row">
+        <span class="card-key">Produit</span>
+        <span class="card-val">Huile de Nigelle Habashia — Éthiopie</span>
+      </div>
+      <div class="card-row">
+        <span class="card-key">Format</span>
+        <span class="card-val">Flacon en verre ambré · 100 ml</span>
+      </div>
+      <div class="card-row">
+        <span class="card-key">Procédé</span>
+        <span class="card-val">1ère pression à froid (&lt; 27 °C)</span>
+      </div>
+      <div class="card-row">
+        <span class="card-key">Composition</span>
+        <span class="card-val">100 % Huile de Nigella sativa, variété Habashia</span>
+      </div>
+      <div class="card-row">
+        <span class="card-key">Prix TTC</span>
+        <span class="card-val gold">9,99 €</span>
+      </div>
+    </div>
+    <p>Les photographies et descriptions des produits sont fournies à titre indicatif. Les caractéristiques essentielles du produit sont décrites sur la fiche produit. Le Vendeur se réserve le droit de modifier les prix à tout moment, les commandes étant facturées au tarif en vigueur au moment de la validation.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">03</span>
+    <h2>Processus de commande</h2>
+    <h3>Étapes de la commande</h3>
+    <ul class="legal-list">
+      <li>Sélection du produit sur la boutique et clic sur « Commander »</li>
+      <li>Saisie de l'adresse de livraison sur la page de paiement</li>
+      <li>Saisie des informations de carte bancaire via Stripe</li>
+      <li>Validation et confirmation du paiement</li>
+      <li>Réception d'un e-mail de confirmation de commande</li>
+    </ul>
+    <p>La vente est réputée conclue dès la confirmation du paiement par Stripe. Un e-mail de confirmation est envoyé automatiquement à l'adresse fournie par le Client.</p>
+    <p>Le Vendeur se réserve le droit d'annuler ou de refuser toute commande en cas de litige relatif au paiement d'une commande antérieure ou de suspicion de fraude.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">04</span>
+    <h2>Prix et paiement</h2>
+    <p>Les prix sont indiqués en euros toutes taxes comprises (TTC). Le Vendeur, en tant qu'auto-entrepreneur bénéficiant de la franchise en base de TVA (article 293 B du CGI), n'est pas assujetti à la TVA.</p>
+    <h3>Modalités de paiement</h3>
+    <p>Le paiement s'effectue en ligne, en une seule fois, par carte bancaire (Visa, Mastercard, American Express) via la plateforme sécurisée <strong>Stripe</strong>. Les données bancaires du Client sont chiffrées par protocole SSL et ne sont jamais stockées par le Vendeur.</p>
+    <p>La commande est débitée au moment de la validation. En cas d'échec du paiement, la commande n'est pas enregistrée.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">05</span>
+    <h2>Livraison</h2>
+    <div class="card">
+      <div class="card-row">
+        <span class="card-key">Zone de livraison</span>
+        <span class="card-val">France métropolitaine et international (selon pays disponibles)</span>
+      </div>
+      <div class="card-row">
+        <span class="card-key">Frais de livraison</span>
+        <span class="card-val green">Offerts</span>
+      </div>
+      <div class="card-row">
+        <span class="card-key">Délai d'expédition</span>
+        <span class="card-val">48–72 h ouvrées après confirmation du paiement</span>
+      </div>
+      <div class="card-row">
+        <span class="card-key">Transporteur</span>
+        <span class="card-val">Colissimo / La Poste ou équivalent</span>
+      </div>
+    </div>
+    <p>Les délais indiqués sont des délais moyens indicatifs et correspondent aux délais de traitement et d'acheminement. Le Vendeur ne peut être tenu responsable des retards imputables au transporteur ou à des circonstances exceptionnelles (grèves, intempéries, jours fériés).</p>
+    <p>En cas de colis perdu ou endommagé, le Client doit contacter le Vendeur dans les 14 jours suivant la date de livraison estimée à <a href="mailto:byas1644@gmail.com">byas1644@gmail.com</a>.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">06</span>
+    <h2>Droit de rétractation et retours</h2>
+    <div class="badge-row">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <polyline points="9 12 11 14 15 10"/>
+      </svg>
+      <p><strong style="color:var(--cream);">Satisfait ou remboursé 30 jours.</strong> Conformément aux articles L.221-18 et suivants du Code de la consommation, vous disposez d'un délai de 30 jours à compter de la réception de votre commande pour exercer votre droit de rétractation, sans avoir à justifier de motifs.</p>
+    </div>
+    <h3>Procédure de retour</h3>
+    <ul class="legal-list">
+      <li>Notifier votre intention de retour à <a href="mailto:byas1644@gmail.com">byas1644@gmail.com</a> dans le délai de 30 jours</li>
+      <li>Renvoyer le produit dans son emballage d'origine, non entamé, à l'adresse communiquée</li>
+      <li>Les frais de retour sont à la charge du Client</li>
+      <li>Le remboursement est effectué dans les 14 jours suivant la réception du retour, par le même moyen de paiement</li>
+    </ul>
+    <p>Le droit de rétractation ne peut être exercé pour les produits descellés, partiellement utilisés ou dont le conditionnement a été ouvert pour des raisons d'hygiène, conformément à l'article L.221-28 du Code de la consommation.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">07</span>
+    <h2>Garanties légales</h2>
+    <p>Tous les produits bénéficient de la garantie légale de conformité (articles L.217-4 et suivants du Code de la consommation) et de la garantie légale contre les vices cachés (articles 1641 et suivants du Code civil).</p>
+    <p>En cas de défaut de conformité ou de vice caché constaté, le Client peut contacter le Vendeur à <a href="mailto:byas1644@gmail.com">byas1644@gmail.com</a> pour convenir d'une solution (remplacement ou remboursement).</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">08</span>
+    <h2>Responsabilité</h2>
+    <p>Les produits sont des compléments alimentaires et cosmétiques naturels. Ils ne constituent pas des médicaments et ne sauraient remplacer un traitement médical. Le Vendeur décline toute responsabilité quant à l'usage des produits fait en dehors des recommandations indiquées.</p>
+    <p>La responsabilité du Vendeur ne pourra être engagée en cas de force majeure, de faute du Client ou d'un tiers.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">09</span>
+    <h2>Données personnelles</h2>
+    <p>Les données collectées lors de la commande (nom, adresse, e-mail) sont utilisées uniquement pour le traitement et la livraison de votre commande. Pour en savoir plus, consultez notre <a href="/confidentialite.html">Politique de confidentialité</a>.</p>
+  </div>
+
+  <div class="section">
+    <span class="section-num">10</span>
+    <h2>Litiges et droit applicable</h2>
+    <p>Les présentes CGV sont soumises au droit français. En cas de litige, une solution amiable sera recherchée en priorité. À défaut, le Client peut recourir au médiateur de la consommation compétent ou saisir la plateforme européenne de règlement en ligne des litiges : <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a>.</p>
+    <p>Pour toute réclamation : <a href="mailto:byas1644@gmail.com">byas1644@gmail.com</a></p>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Habashia <em>Nigelle</em></div>
+    <nav aria-label="Liens du pied de page">
+      <ul class="footer-links">
+        <li><a href="/mentions-legales.html">Mentions légales</a></li>
+        <li><a href="/confidentialite.html">Confidentialité</a></li>
+        <li><a href="/cgv.html">CGV</a></li>
+        <li><a href="mailto:byas1644@gmail.com">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+  <p class="footer-copy">© 2025 Habashia Nigelle · Tous droits réservés · Les informations présentées ne se substituent pas à un avis médical.</p>
+</footer>
+
+</body>
+</html>
