@@ -731,9 +731,9 @@
         errEl.textContent = error.message;
         setLoading(false);
       } else if (paymentIntent.status === 'succeeded') {
-        // 3. Envoyer l'e-mail de confirmation au vendeur (best-effort)
+        // 3. Envoyer l'e-mail de confirmation + récupérer le numéro de commande
         try {
-          await fetch('/send-confirmation', {
+          const confirmResp = await fetch('/send-confirmation', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -742,6 +742,15 @@
               paymentIntentId: paymentIntent.id,
             }),
           });
+          const confirmData = await confirmResp.json();
+          // Stocker le numéro de commande pour success.html
+          if (confirmData.orderNumber) {
+            const stored = JSON.parse(sessionStorage.getItem('habashia_order') || '{}');
+            sessionStorage.setItem('habashia_order', JSON.stringify({
+              ...stored,
+              orderNumber: confirmData.orderNumber,
+            }));
+          }
         } catch (_) {
           // Échec silencieux : l'e-mail n'est pas critique pour le client
         }

@@ -88,6 +88,29 @@
       to   { opacity: 1; transform: none; }
     }
 
+    /* Numéro de commande */
+    .order-number-block {
+      max-width: 420px; width: 100%; margin: 0 auto 1.8rem;
+      background: rgba(201,168,76,.07);
+      border: 1px solid rgba(201,168,76,.28);
+      border-radius: 10px; padding: 1.2rem 1.8rem;
+      text-align: center;
+      animation: fadeUp .5s .4s ease both;
+    }
+    .order-number-label {
+      font-size: .6rem; font-weight: 500; letter-spacing: .28em;
+      text-transform: uppercase; color: rgba(201,168,76,.6);
+      margin-bottom: .5rem;
+    }
+    .order-number-value {
+      font-size: 1.45rem; font-weight: 600; letter-spacing: .12em;
+      color: var(--gold); font-family: monospace;
+    }
+    .order-number-hint {
+      font-size: .7rem; color: rgba(245,240,232,.3);
+      margin-top: .45rem; letter-spacing: .04em;
+    }
+
     /* Récapitulatif commande */
     .recap {
       background: rgba(255,255,255,.03);
@@ -178,6 +201,13 @@
       Vous recevrez un e-mail de confirmation sous quelques minutes.
     </p>
 
+    <!-- Numéro de commande -->
+    <div class="order-number-block" id="order-number-block" style="display:none;" aria-live="polite">
+      <div class="order-number-label">Numéro de commande</div>
+      <div class="order-number-value" id="succ-order-number">—</div>
+      <div class="order-number-hint">Conservez ce numéro pour tout suivi</div>
+    </div>
+
     <!-- Récapitulatif -->
     <div class="recap" role="region" aria-label="Récapitulatif de commande">
       <div class="recap-title">Récapitulatif</div>
@@ -263,6 +293,13 @@
         document.getElementById('succ-adresse').textContent = order.adresse;
         document.getElementById('succ-cp-ville').textContent = `${order.cp} ${order.ville}`;
         document.getElementById('succ-pays').textContent    = countries[order.pays] || order.pays;
+      }
+
+      // Affichage du numéro de commande
+      if (order.orderNumber) {
+        const nb = document.getElementById('order-number-block');
+        nb.style.display = '';
+        document.getElementById('succ-order-number').textContent = order.orderNumber;
       }
 
       // Affichage de l'e-mail

@@ -88,6 +88,14 @@ app.post('/send-confirmation', async (req, res) => {
       return res.status(400).json({ error: 'Données de commande manquantes.' });
     }
 
+    // ── Génération du numéro de commande unique ───────────
+    // Format : HAB-AAAA-XXXX  (année + 4 caractères sans ambiguïté)
+    const ORDER_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    const suffix = Array.from({ length: 4 }, () =>
+      ORDER_CHARS[Math.floor(Math.random() * ORDER_CHARS.length)]
+    ).join('');
+    const orderNumber = `HAB-${new Date().getFullYear()}-${suffix}`;
+
     // Table ISO → nom de pays (identique au frontend)
     const countries = {
       FR: 'France',        BE: 'Belgique',       CH: 'Suisse',
@@ -197,6 +205,10 @@ app.post('/send-confirmation', async (req, res) => {
                 </td>
               </tr>
               <tr>
+                <td style="font-size:13px;color:rgba(245,240,232,.5);padding:7px 0;">N° commande</td>
+                <td style="font-size:13px;font-weight:600;color:#c9a84c;padding:7px 0;letter-spacing:.06em;">${orderNumber}</td>
+              </tr>
+              <tr>
                 <td style="font-size:13px;color:rgba(245,240,232,.5);padding:7px 0;">Produit</td>
                 <td style="font-size:13px;color:#f5f0e8;padding:7px 0;">Huile de Nigelle Habashia — 100 ml</td>
               </tr>
@@ -284,8 +296,13 @@ app.post('/send-confirmation', async (req, res) => {
             <div style="font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#4a5e3a;background:rgba(74,94,58,.1);border:1px solid rgba(74,94,58,.28);display:inline-block;padding:6px 18px;border-radius:50px;margin-bottom:26px;">
               Commande confirmée
             </div>
-            <div style="font-size:22px;font-weight:300;color:#f5f0e8;line-height:1.45;margin-bottom:16px;">
+            <div style="font-size:22px;font-weight:300;color:#f5f0e8;line-height:1.45;margin-bottom:20px;">
               Merci, <strong style="font-weight:500;color:#c9a84c;">${shipping.prenom}</strong> !
+            </div>
+            <!-- Numéro de commande -->
+            <div style="display:inline-block;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:14px 28px;margin-bottom:22px;">
+              <div style="font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(201,168,76,.6);margin-bottom:6px;">Numéro de commande</div>
+              <div style="font-size:22px;font-weight:600;color:#c9a84c;letter-spacing:.12em;font-family:monospace;">${orderNumber}</div>
             </div>
             <div style="font-size:14px;font-weight:300;color:rgba(245,240,232,.62);line-height:1.85;max-width:420px;margin:0 auto;">
               Votre commande a bien été reçue et votre paiement confirmé.
@@ -454,11 +471,12 @@ app.post('/send-confirmation', async (req, res) => {
       transporter.sendMail({
         from:    `"Habashia Nigelle" <${process.env.GMAIL_USER}>`,
         to:      'byas1644@gmail.com',
-        subject: `🛍️ Nouvelle commande — ${shipping.prenom} ${shipping.nom} — 9,99 €`,
+        subject: `🛍️ [${orderNumber}] Nouvelle commande — ${shipping.prenom} ${shipping.nom} — 9,99 €`,
         html,
         text: [
           '=== NOUVELLE COMMANDE — HABASHIA NIGELLE ===',
           '',
+          `N° commande  : ${orderNumber}`,
           `Client       : ${shipping.prenom} ${shipping.nom}`,
           `E-mail       : ${email || '—'}`,
           '',
@@ -481,12 +499,14 @@ app.post('/send-confirmation', async (req, res) => {
       ...(email ? [transporter.sendMail({
         from:    `"Habashia Nigelle" <${process.env.GMAIL_USER}>`,
         to:      email,
-        subject: 'Confirmation de votre commande — Habashia Nigelle',
+        subject: `Confirmation de votre commande ${orderNumber} — Habashia Nigelle`,
         html:    htmlClient,
         text: [
           `Bonjour ${shipping.prenom},`,
           '',
           'Merci pour votre commande ! Votre paiement a été confirmé.',
+          '',
+          `N° de commande : ${orderNumber}`,
           '',
           '--- Votre commande ---',
           'Produit  : Huile de Nigelle Habashia — Éthiopie 100 ml',
@@ -510,8 +530,8 @@ app.post('/send-confirmation', async (req, res) => {
       })] : []),
     ]);
 
-    console.log(`✉  E-mails envoyés — vendeur + client (${email || 'pas d\'e-mail client'})`);
-    res.json({ sent: true });
+    console.log(`✉  [${orderNumber}] E-mails envoyés — vendeur + client (${email || 'pas d\'e-mail client'})`);
+    res.json({ sent: true, orderNumber });
 
   } catch (err) {
     console.error('Nodemailer error:', err.message);
