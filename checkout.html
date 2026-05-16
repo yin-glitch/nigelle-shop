@@ -270,6 +270,11 @@
     .price-separator { height: 1px; background: linear-gradient(90deg,transparent,rgba(201,168,76,.18),transparent); margin: .5rem 0; }
     .price-total .price-key { font-weight: 500; color: var(--cream); font-size: .92rem; }
     .price-total .price-val { font-family: var(--f-title); font-size: 1.55rem; color: var(--gold); }
+    /* Transition fluide lors du changement de zone */
+    #ship-val, #total-val { transition: opacity .2s ease, color .3s ease; }
+    #ship-val.updating, #total-val.updating { opacity: 0; }
+    .price-shipping.free  { color: var(--moss-light); }
+    .price-shipping.paid  { color: var(--cream); }
 
     /* Badges */
     .summary-badges {
@@ -479,7 +484,7 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
             </svg>
-            Payer 9,99 € — Commander
+            <span id="btn-pay-label">Payer 9,99 € — Commander</span>
           </span>
           <span id="btn-loading" style="display:none;align-items:center;gap:.75rem;">
             <span class="btn-spinner" aria-hidden="true"></span>
@@ -548,13 +553,13 @@
             <span class="price-val">9,99 €</span>
           </div>
           <div class="price-row">
-            <span class="price-key">Livraison</span>
-            <span class="price-val" style="color:var(--moss-light);">Offerte</span>
+            <span class="price-key" id="ship-label">Livraison</span>
+            <span class="price-val price-shipping" id="ship-val">Offerte</span>
           </div>
           <div class="price-separator"></div>
           <div class="price-row price-total">
             <span class="price-key">Total</span>
-            <span class="price-val">9,99 €</span>
+            <span class="price-val" id="total-val">9,99 €</span>
           </div>
         </div>
 
@@ -624,6 +629,45 @@
     toast.classList.add('show');
     toastTimer = setTimeout(() => toast.classList.remove('show'), 4500);
   }
+
+  /* ── ZONES DE LIVRAISON ─────────────────────────────────── */
+  const EUROPE = new Set(['BE','CH','LU','DE','ES','IT','NL','GB','PT']);
+
+  // Retourne { cents, euros, label, zone } selon le code ISO
+  function shippingFor(code) {
+    if (code === 'FR')        return { cents: 0,   euros: 0,    label: 'Offerte',   zone: 'France' };
+    if (EUROPE.has(code))     return { cents: 499, euros: 4.99, label: '4,99 €',    zone: 'Europe' };
+    return                           { cents: 999, euros: 9.99, label: '9,99 €',    zone: 'Monde'  };
+  }
+
+  function fmtPrice(euros) {
+    return euros.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+  }
+
+  function updateShippingUI(code) {
+    const s       = shippingFor(code);
+    const shipEl  = document.getElementById('ship-val');
+    const totalEl = document.getElementById('total-val');
+    const btnLbl  = document.getElementById('btn-pay-label');
+
+    // Micro-fade pour rendre le changement visible
+    [shipEl, totalEl].forEach(el => el.classList.add('updating'));
+    setTimeout(() => {
+      const total = 9.99 + s.euros;
+      shipEl.textContent  = s.label;
+      shipEl.className    = 'price-val price-shipping ' + (s.cents === 0 ? 'free' : 'paid');
+      totalEl.textContent = fmtPrice(total);
+      if (btnLbl) btnLbl.textContent = `Payer ${fmtPrice(total)} — Commander`;
+      [shipEl, totalEl].forEach(el => el.classList.remove('updating'));
+    }, 200);
+  }
+
+  // Mise à jour au changement de pays
+  document.getElementById('ship-pays').addEventListener('change', function () {
+    updateShippingUI(this.value);
+  });
+  // Initialisation (France sélectionnée par défaut)
+  updateShippingUI(document.getElementById('ship-pays').value);
 
   /* ── STRIPE ELEMENTS ────────────────────────────────────── */
   const STRIPE_PK = 'pk_test_51TWLXV8zyMfvUXPqYiNf3tqfkH6Js9ZPD5YJasbfA1j2g9lbHWCZGcAEZPxBbUUmxhE3AdayJ4Ou2nKYpb3VZwL000v7xHxsL4';
@@ -697,11 +741,20 @@
     errEl.textContent = '';
     setLoading(true);
 
+    // Calcul local (pour sessionStorage) — le serveur recalcule de son côté
+    const shipInfo = shippingFor(shipping.pays);
+    const totalEuros = 9.99 + shipInfo.euros;
+
     // Sauvegarde pour success.html
-    sessionStorage.setItem('habashia_order', JSON.stringify({ ...shipping, email }));
+    sessionStorage.setItem('habashia_order', JSON.stringify({
+      ...shipping, email,
+      shippingCost: shipInfo.euros,
+      shippingZone: shipInfo.zone,
+      total: totalEuros,
+    }));
 
     try {
-      // 1. Créer le PaymentIntent côté serveur
+      // 1. Créer le PaymentIntent côté serveur (montant calculé depuis le pays)
       const resp = await fetch('/create-payment-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

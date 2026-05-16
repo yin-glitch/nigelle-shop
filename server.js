@@ -33,13 +33,32 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// ── Zones de livraison (source de vérité serveur) ─────────
+const EUROPE_CODES = new Set(['BE','CH','LU','DE','ES','IT','NL','GB','PT']);
+
+function getShippingCents(countryCode) {
+  if (!countryCode || countryCode === 'FR') return 0;
+  if (EUROPE_CODES.has(countryCode))        return 499;  // 4,99 €
+  return 999;                                             // 9,99 €
+}
+
+function getShippingLabel(countryCode) {
+  if (!countryCode || countryCode === 'FR') return 'Offerte';
+  if (EUROPE_CODES.has(countryCode))        return '4,99 €';
+  return '9,99 €';
+}
+
 // ── POST /create-payment-intent ───────────────────────────
 app.post('/create-payment-intent', async (req, res) => {
   try {
     const { email, shipping } = req.body;
 
+    // Calcul du montant total (toujours côté serveur, jamais côté client)
+    const shippingCents = getShippingCents(shipping?.pays);
+    const totalCents    = 999 + shippingCents;  // 9,99 € + frais de port
+
     const paymentIntent = await stripe.paymentIntents.create({
-      amount:        999,   // centimes (9,99 €)
+      amount:        totalCents,
       currency:      'eur',
       receipt_email: email || undefined,
 
@@ -56,8 +75,11 @@ app.post('/create-payment-intent', async (req, res) => {
       }),
 
       metadata: {
-        product: 'Huile de Nigelle Habashia — Éthiopie 100ml',
-        source:  'habashia-nigelle.fr',
+        product:          'Huile de Nigelle Habashia — Éthiopie 100ml',
+        source:           'habashia-nigelle.fr',
+        prix_produit:     '9.99',
+        frais_livraison:  (shippingCents / 100).toFixed(2),
+        total:            (totalCents    / 100).toFixed(2),
         ...(shipping && {
           livraison_nom:   `${shipping.prenom} ${shipping.nom}`,
           livraison_rue:   shipping.adresse,
@@ -87,6 +109,13 @@ app.post('/send-confirmation', async (req, res) => {
     if (!shipping || !shipping.prenom) {
       return res.status(400).json({ error: 'Données de commande manquantes.' });
     }
+
+    // ── Calcul des frais de livraison (recalcul serveur) ─────
+    const shipCents = getShippingCents(shipping.pays);
+    const shipLabel = getShippingLabel(shipping.pays);
+    const totalCentsConfirm = 999 + shipCents;
+    const totalStr = (totalCentsConfirm / 100).toLocaleString('fr-FR',
+      { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
 
     // ── Génération du numéro de commande unique ───────────
     // Format : HAB-AAAA-XXXX  (année + 4 caractères sans ambiguïté)
@@ -210,7 +239,11 @@ app.post('/send-confirmation', async (req, res) => {
               </tr>
               <tr>
                 <td style="font-size:13px;color:rgba(245,240,232,.5);padding:7px 0;">Produit</td>
-                <td style="font-size:13px;color:#f5f0e8;padding:7px 0;">Huile de Nigelle Habashia — 100 ml</td>
+                <td style="font-size:13px;color:#f5f0e8;padding:7px 0;">Huile de Nigelle Habashia — 100 ml · 9,99 €</td>
+              </tr>
+              <tr>
+                <td style="font-size:13px;color:rgba(245,240,232,.5);padding:7px 0;">Livraison</td>
+                <td style="font-size:13px;color:#f5f0e8;padding:7px 0;">${shipLabel}</td>
               </tr>
               <tr>
                 <td style="font-size:13px;color:rgba(245,240,232,.5);padding:7px 0;">Date</td>
@@ -236,7 +269,7 @@ app.post('/send-confirmation', async (req, res) => {
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
                 <td style="font-size:13px;color:rgba(245,240,232,.6);font-weight:500;">Montant encaissé</td>
-                <td align="right" style="font-size:26px;font-weight:300;color:#c9a84c;font-family:Georgia,serif;">9,99 €</td>
+                <td align="right" style="font-size:26px;font-weight:300;color:#c9a84c;font-family:Georgia,serif;">${totalStr}</td>
               </tr>
             </table>
           </td>
@@ -355,7 +388,7 @@ app.post('/send-confirmation', async (req, res) => {
               </tr>
               <tr>
                 <td style="font-size:13px;color:rgba(245,240,232,.45);padding:5px 0;">Livraison</td>
-                <td align="right" style="font-size:13px;color:#5c7249;padding:5px 0;">Offerte</td>
+                <td align="right" style="font-size:13px;color:${shipCents === 0 ? '#5c7249' : 'rgba(245,240,232,.7)'};padding:5px 0;">${shipLabel}</td>
               </tr>
             </table>
           </td>
@@ -367,7 +400,7 @@ app.post('/send-confirmation', async (req, res) => {
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
                 <td style="font-size:13px;color:rgba(245,240,232,.65);font-weight:500;">Total payé</td>
-                <td align="right" style="font-size:28px;font-weight:300;color:#c9a84c;font-family:Georgia,serif;">9,99 €</td>
+                <td align="right" style="font-size:28px;font-weight:300;color:#c9a84c;font-family:Georgia,serif;">${totalStr}</td>
               </tr>
             </table>
           </td>
@@ -486,9 +519,10 @@ app.post('/send-confirmation', async (req, res) => {
           paysLabel,
           '',
           '--- Commande ---',
-          'Produit      : Huile de Nigelle Habashia — 100 ml',
+          'Produit      : Huile de Nigelle Habashia — 100 ml · 9,99 €',
+          `Livraison    : ${shipLabel}`,
           `Date         : ${dateLabel} à ${heureLabel}`,
-          `Montant      : 9,99 €`,
+          `Montant      : ${totalStr}`,
           paymentIntentId ? `Réf. Stripe  : ${paymentIntentId}` : '',
           '',
           '============================================',
@@ -509,10 +543,10 @@ app.post('/send-confirmation', async (req, res) => {
           `N° de commande : ${orderNumber}`,
           '',
           '--- Votre commande ---',
-          'Produit  : Huile de Nigelle Habashia — Éthiopie 100 ml',
+          'Produit  : Huile de Nigelle Habashia — Éthiopie 100 ml · 9,99 €',
           'Quantité : 1',
-          'Montant  : 9,99 €',
-          'Livraison: Offerte',
+          `Livraison: ${shipLabel}`,
+          `Montant  : ${totalStr}`,
           '',
           '--- Adresse de livraison ---',
           `${shipping.prenom} ${shipping.nom}`,
