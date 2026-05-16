@@ -355,6 +355,74 @@
     .footer-links a:focus-visible { outline: 1px solid var(--gold); outline-offset: 2px; border-radius: 2px; }
     .footer-copy { width: 100%; text-align: center; font-size: .68rem; color: rgba(245,240,232,.22); padding-top: 1.5rem; margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.04); letter-spacing: .04em; }
 
+    /* ── URGENCY WIDGETS ────────────────────────────────── */
+    .viewers-badge {
+      display: inline-flex; align-items: center; gap: .55rem;
+      font-size: .8rem; font-weight: 300; color: rgba(245,240,232,.62);
+      margin-bottom: 1rem;
+    }
+    .viewers-dot {
+      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+      background: #6db87a;
+      animation: pulse-green 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse-green {
+      0%,100% { box-shadow: 0 0 0 0 rgba(109,184,122,.55); }
+      55%      { box-shadow: 0 0 0 5px rgba(109,184,122,0); }
+    }
+    .viewers-num { color: var(--cream); font-weight: 500;
+      transition: opacity .3s ease; }
+    .viewers-num.flash { opacity: 0; }
+
+    .stock-bar {
+      display: flex; align-items: flex-start; gap: .6rem;
+      margin-bottom: 1.6rem;
+    }
+    .stock-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+      margin-top: .28rem; background: #e08060;
+      animation: pulse-red 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse-red {
+      0%,100% { box-shadow: 0 0 0 0 rgba(224,128,96,.55); }
+      55%      { box-shadow: 0 0 0 5px rgba(224,128,96,0); }
+    }
+    .stock-info {}
+    .stock-text {
+      font-size: .8rem; font-weight: 400; color: rgba(245,240,232,.75);
+      margin-bottom: .38rem;
+    }
+    .stock-text strong {
+      color: #e09070; font-weight: 600;
+      transition: opacity .3s ease;
+    }
+    .stock-text strong.flash { opacity: 0; }
+    .stock-pips { display: flex; gap: 3px; }
+    .stock-pip {
+      height: 4px; border-radius: 2px;
+      background: rgba(224,128,96,.18);
+      transition: background .6s ease, width .6s ease;
+    }
+    .stock-pip.on { background: #e08060; }
+
+    /* Compact version for CTA section */
+    .urgency-row {
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 1.2rem;
+      margin: .4rem 0 1.6rem;
+    }
+    .urgency-chip {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-size: .75rem; font-weight: 300;
+      color: rgba(245,240,232,.55);
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.07);
+      padding: .38rem .9rem; border-radius: 50px;
+    }
+    .urgency-chip .viewers-dot { width: 6px; height: 6px; }
+    .urgency-chip .stock-dot  { width: 6px; height: 6px; margin-top: 0; }
+    .urgency-chip span.val    { color: var(--cream); font-weight: 500; }
+
     /* ── RESPONSIVE ─────────────────────────────────────── */
     @media (max-width: 1024px) {
       .product-grid { gap: 3rem; }
@@ -481,6 +549,19 @@
         <div class="p-price-row reveal d4">
           <div class="p-price">9,99 €</div>
           <div class="p-price-note">Flacon 100 ml<br>Livraison offerte dès 2 flacons</div>
+        </div>
+        <!-- Viewers -->
+        <div class="viewers-badge reveal d5" aria-live="polite">
+          <span class="viewers-dot" aria-hidden="true"></span>
+          <span class="viewers-num" id="viewers-product">3</span>&nbsp;personnes regardent ce produit en ce moment
+        </div>
+        <!-- Stock -->
+        <div class="stock-bar reveal d5" aria-live="polite">
+          <span class="stock-dot" aria-hidden="true"></span>
+          <div class="stock-info">
+            <div class="stock-text">Plus que <strong id="stock-product">7</strong> flacons disponibles</div>
+            <div class="stock-pips" id="pips-product" aria-hidden="true"></div>
+          </div>
         </div>
         <a href="checkout.html" class="btn-primary reveal d5" aria-label="Commander l'huile de nigelle Habashia — 9,99 €">
           Commander — 9,99 €
@@ -738,7 +819,18 @@
         Flacon en verre ambré · Première pression à froid
       </p>
       <div class="order-price reveal d2">9,99 €</div>
-      <p class="order-note reveal d2">TVA incluse · Flacon 100 ml · Stock limité</p>
+      <p class="order-note reveal d2">TVA incluse · Flacon 100 ml</p>
+      <!-- Urgency chips -->
+      <div class="urgency-row reveal d3" aria-live="polite">
+        <div class="urgency-chip">
+          <span class="viewers-dot" aria-hidden="true"></span>
+          <span class="viewers-num" id="viewers-cta">3</span>&nbsp;personnes regardent
+        </div>
+        <div class="urgency-chip">
+          <span class="stock-dot" aria-hidden="true"></span>
+          Plus que&nbsp;<span class="val" id="stock-cta">7</span>&nbsp;flacons
+        </div>
+      </div>
       <a href="checkout.html" class="order-btn reveal d3" aria-label="Commander l'huile de nigelle Habashia — 9,99 €">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
@@ -828,6 +920,126 @@
     });
   });
 
+
+  /* ── URGENCY WIDGETS ─────────────────────────────────── */
+
+  // ── Stock counter ──────────────────────────────────────
+  (function () {
+    const MAX   = 7;
+    const KEY   = 'habashia_stock';
+    // Chaque "tick" = 9 min ± 2 min de variation aléatoire
+    const TICK_MS = 9 * 60 * 1000;
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (_) {}
+      // Première visite : on initialise avec un timestamp légèrement dans le passé
+      // pour que le stock semble déjà "en train de descendre"
+      const state = { count: MAX, ts: Date.now() - Math.random() * TICK_MS };
+      saveState(state);
+      return state;
+    }
+
+    function saveState(s) {
+      try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (_) {}
+    }
+
+    function computeCount(state) {
+      const ticks = Math.floor((Date.now() - state.ts) / TICK_MS);
+      return Math.max(1, state.count - ticks);
+    }
+
+    function advanceState(state) {
+      const ticks = Math.floor((Date.now() - state.ts) / TICK_MS);
+      if (ticks > 0) {
+        const next = { count: Math.max(1, state.count - ticks), ts: state.ts + ticks * TICK_MS };
+        saveState(next);
+        return next;
+      }
+      return state;
+    }
+
+    function buildPips(container, count) {
+      container.innerHTML = '';
+      for (let i = 0; i < MAX; i++) {
+        const pip = document.createElement('span');
+        pip.className = 'stock-pip' + (i < count ? ' on' : '');
+        pip.style.width = Math.round(100 / MAX) - 1 + 'px'; // ~13px each
+        container.appendChild(pip);
+      }
+    }
+
+    function flashEl(el) {
+      el.classList.add('flash');
+      setTimeout(() => el.classList.remove('flash'), 300);
+    }
+
+    function render(count, animate) {
+      const elProduct = document.getElementById('stock-product');
+      const elCta     = document.getElementById('stock-cta');
+      const pips      = document.getElementById('pips-product');
+
+      if (animate) {
+        if (elProduct) flashEl(elProduct);
+        if (elCta)     flashEl(elCta);
+        setTimeout(() => {
+          if (elProduct) elProduct.textContent = count;
+          if (elCta)     elCta.textContent     = count;
+          if (pips)      buildPips(pips, count);
+        }, 310);
+      } else {
+        if (elProduct) elProduct.textContent = count;
+        if (elCta)     elCta.textContent     = count;
+        if (pips)      buildPips(pips, count);
+      }
+    }
+
+    let state   = loadState();
+    let current = computeCount(state);
+    render(current, false);
+
+    // Polling toutes les 30 s pour capturer un tick éventuel
+    setInterval(() => {
+      const prev  = current;
+      state       = advanceState(state);
+      current     = computeCount(state);
+      if (current !== prev) render(current, true);
+    }, 30_000);
+  })();
+
+  // ── Viewers counter ────────────────────────────────────
+  (function () {
+    const targets = [
+      document.getElementById('viewers-product'),
+      document.getElementById('viewers-cta'),
+    ];
+
+    function rnd() { return Math.floor(Math.random() * 4) + 2; } // 2–5
+
+    function update() {
+      const n = rnd();
+      targets.forEach(el => {
+        if (!el) return;
+        el.classList.add('flash');
+        setTimeout(() => {
+          el.textContent = n;
+          el.classList.remove('flash');
+        }, 300);
+      });
+    }
+
+    // Premier affichage immédiat avec valeur aléatoire
+    const init = rnd();
+    targets.forEach(el => { if (el) el.textContent = init; });
+
+    function schedule() {
+      const delay = 15_000 + Math.random() * 20_000; // 15–35 s
+      setTimeout(() => { update(); schedule(); }, delay);
+    }
+    schedule();
+  })();
 </script>
 </body>
 </html>
