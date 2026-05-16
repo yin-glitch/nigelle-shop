@@ -479,12 +479,12 @@
           <div id="card-errors" class="card-errors" role="alert" aria-live="assertive"></div>
         </div>
 
-        <button type="submit" class="pay-btn" id="submit-btn" aria-label="Payer 9,99 € par carte bancaire">
+        <button type="submit" class="pay-btn" id="submit-btn" aria-label="Payer 13,99 € par carte bancaire">
           <span id="btn-default" style="display:flex;align-items:center;gap:.75rem;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
             </svg>
-            <span id="btn-pay-label">Payer 9,99 € — Commander</span>
+            <span id="btn-pay-label">Payer 13,99 € — Commander</span>
           </span>
           <span id="btn-loading" style="display:none;align-items:center;gap:.75rem;">
             <span class="btn-spinner" aria-hidden="true"></span>
@@ -543,14 +543,14 @@
               <span class="s-tag">Sans additifs</span>
             </div>
           </div>
-          <div class="summary-product-price">9,99 €</div>
+          <div class="summary-product-price">13,99 €</div>
         </div>
 
         <!-- Pricing breakdown -->
         <div class="summary-pricing">
           <div class="price-row">
             <span class="price-key">Sous-total</span>
-            <span class="price-val">9,99 €</span>
+            <span class="price-val">13,99 €</span>
           </div>
           <div class="price-row">
             <span class="price-key" id="ship-label">Livraison</span>
@@ -559,7 +559,7 @@
           <div class="price-separator"></div>
           <div class="price-row price-total">
             <span class="price-key">Total</span>
-            <span class="price-val" id="total-val">9,99 €</span>
+            <span class="price-val" id="total-val">13,99 €</span>
           </div>
         </div>
 
@@ -653,7 +653,7 @@
     // Micro-fade pour rendre le changement visible
     [shipEl, totalEl].forEach(el => el.classList.add('updating'));
     setTimeout(() => {
-      const total = 9.99 + s.euros;
+      const total = 13.99 + s.euros;
       shipEl.textContent  = s.label;
       shipEl.className    = 'price-val price-shipping ' + (s.cents === 0 ? 'free' : 'paid');
       totalEl.textContent = fmtPrice(total);
@@ -743,7 +743,7 @@
 
     // Calcul local (pour sessionStorage) — le serveur recalcule de son côté
     const shipInfo = shippingFor(shipping.pays);
-    const totalEuros = 9.99 + shipInfo.euros;
+    const totalEuros = 13.99 + shipInfo.euros;
 
     // Sauvegarde pour success.html
     sessionStorage.setItem('habashia_order', JSON.stringify({

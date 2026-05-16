@@ -55,7 +55,7 @@ app.post('/create-payment-intent', async (req, res) => {
 
     // Calcul du montant total (toujours côté serveur, jamais côté client)
     const shippingCents = getShippingCents(shipping?.pays);
-    const totalCents    = 999 + shippingCents;  // 9,99 € + frais de port
+    const totalCents    = 1399 + shippingCents;  // 13,99 € + frais de port
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount:        totalCents,
@@ -77,7 +77,7 @@ app.post('/create-payment-intent', async (req, res) => {
       metadata: {
         product:          'Huile de Nigelle Habashia — Éthiopie 100ml',
         source:           'habashia-nigelle.fr',
-        prix_produit:     '9.99',
+        prix_produit:     '13.99',
         frais_livraison:  (shippingCents / 100).toFixed(2),
         total:            (totalCents    / 100).toFixed(2),
         ...(shipping && {
@@ -239,7 +239,7 @@ app.post('/send-confirmation', async (req, res) => {
               </tr>
               <tr>
                 <td style="font-size:13px;color:rgba(245,240,232,.5);padding:7px 0;">Produit</td>
-                <td style="font-size:13px;color:#f5f0e8;padding:7px 0;">Huile de Nigelle Habashia — 100 ml · 9,99 €</td>
+                <td style="font-size:13px;color:#f5f0e8;padding:7px 0;">Huile de Nigelle Habashia — 100 ml · 13,99 €</td>
               </tr>
               <tr>
                 <td style="font-size:13px;color:rgba(245,240,232,.5);padding:7px 0;">Livraison</td>
@@ -372,7 +372,7 @@ app.post('/send-confirmation', async (req, res) => {
                 </td>
                 <td style="vertical-align:middle;text-align:right;white-space:nowrap;">
                   <div style="font-size:11px;color:rgba(245,240,232,.4);margin-bottom:3px;">Qté : 1</div>
-                  <div style="font-size:20px;font-weight:300;color:#c9a84c;font-family:Georgia,serif;">9,99 €</div>
+                  <div style="font-size:20px;font-weight:300;color:#c9a84c;font-family:Georgia,serif;">13,99 €</div>
                 </td>
               </tr>
             </table>
@@ -384,7 +384,7 @@ app.post('/send-confirmation', async (req, res) => {
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
                 <td style="font-size:13px;color:rgba(245,240,232,.45);padding:5px 0;">Sous-total</td>
-                <td align="right" style="font-size:13px;color:rgba(245,240,232,.7);padding:5px 0;">9,99 €</td>
+                <td align="right" style="font-size:13px;color:rgba(245,240,232,.7);padding:5px 0;">13,99 €</td>
               </tr>
               <tr>
                 <td style="font-size:13px;color:rgba(245,240,232,.45);padding:5px 0;">Livraison</td>
@@ -504,7 +504,7 @@ app.post('/send-confirmation', async (req, res) => {
       transporter.sendMail({
         from:    `"Habashia Nigelle" <${process.env.GMAIL_USER}>`,
         to:      'byas1644@gmail.com',
-        subject: `🛍️ [${orderNumber}] Nouvelle commande — ${shipping.prenom} ${shipping.nom} — 9,99 €`,
+        subject: `🛍️ [${orderNumber}] Nouvelle commande — ${shipping.prenom} ${shipping.nom} — 13,99 €`,
         html,
         text: [
           '=== NOUVELLE COMMANDE — HABASHIA NIGELLE ===',
@@ -519,7 +519,7 @@ app.post('/send-confirmation', async (req, res) => {
           paysLabel,
           '',
           '--- Commande ---',
-          'Produit      : Huile de Nigelle Habashia — 100 ml · 9,99 €',
+          'Produit      : Huile de Nigelle Habashia — 100 ml · 13,99 €',
           `Livraison    : ${shipLabel}`,
           `Date         : ${dateLabel} à ${heureLabel}`,
           `Montant      : ${totalStr}`,
@@ -543,7 +543,7 @@ app.post('/send-confirmation', async (req, res) => {
           `N° de commande : ${orderNumber}`,
           '',
           '--- Votre commande ---',
-          'Produit  : Huile de Nigelle Habashia — Éthiopie 100 ml · 9,99 €',
+          'Produit  : Huile de Nigelle Habashia — Éthiopie 100 ml · 13,99 €',
           'Quantité : 1',
           `Livraison: ${shipLabel}`,
           `Montant  : ${totalStr}`,
